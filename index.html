@@ -58,10 +58,18 @@
     }
 
     header h1 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       font-family: 'Playfair Display', serif;
       font-size: 1.4rem;
       font-weight: 600;
       letter-spacing: 1px;
+    }
+
+    .logo {
+      height: 40px;
+      width: auto;
     }
 
     nav a {
@@ -219,6 +227,80 @@
       section {
         padding: 80px 6%;
       }
+
+      .lightbox .prev,
+      .lightbox .next {
+        font-size: 2.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+
+      nav a {
+        margin-left: 15px;
+      }
+
+      section {
+        padding: 80px 6%;
+      }
+    }
+      /* ---------- Lightbox ---------- */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 80vh;
+      animation: slideIn 0.45s ease;
+    }
+
+    .lightbox .counter {
+      position: absolute;
+      bottom: 30px;
+      color: #ccc;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .lightbox .close,
+    .lightbox .prev,
+    .lightbox .next {
+      position: absolute;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .lightbox .close {
+      top: 20px;
+      right: 30px;
+    }
+
+    .lightbox .prev {
+      left: 30px;
+    }
+
+    .lightbox .next {
+      right: 30px;
     }
   </style>
 </head>
@@ -226,7 +308,10 @@
 
   <!-- Header -->
   <header>
-    <h1>JH Studio</h1>
+    <h1>
+      <img src="img/logotipo.png" alt="JH Studio Photography" class="logo">
+      JH Studio
+    </h1>
     <nav>
       <a href="#home">Inicio</a>
       <a href="#about">Sobre mí</a>
@@ -303,7 +388,7 @@
 
       <div class="grid-item"><img src="img/foto31.jpg" alt="Fotografía 31"></div>
       <div class="grid-item"><img src="img/foto32.jpg" alt="Fotografía 32"></div>
-      <div class="grid-item"><img src="img/foto33.jpg" alt="Fotografía 33"></div>
+      <div class="grid-item"><img src="img/foto33.png" alt="Fotografía 33"></div>
       <div class="grid-item"><img src="img/foto34.jpg" alt="Fotografía 34"></div>
       <div class="grid-item"><img src="img/foto35.jpg" alt="Fotografía 35"></div>
       <div class="grid-item"><img src="img/foto36.jpg" alt="Fotografía 36"></div>
@@ -317,7 +402,7 @@
       <div class="grid-item"><img src="img/foto43.jpg" alt="Fotografía 43"></div>
       <div class="grid-item"><img src="img/foto44.jpg" alt="Fotografía 44"></div>
       <div class="grid-item"><img src="img/foto45.jpg" alt="Fotografía 45"></div>
-      <div class="grid-item"><img src="img/foto46.jpg" alt="Fotografía 46"></div>
+      <div class="grid-item"><img src="img/foto46.png" alt="Fotografía 46"></div>
       <div class="grid-item"><img src="img/foto47.jpg" alt="Fotografía 47"></div>
       <div class="grid-item"><img src="img/foto48.jpg" alt="Fotografía 48"></div>
       <div class="grid-item"><img src="img/foto49.jpg" alt="Fotografía 49"></div>
@@ -357,7 +442,87 @@
     © 2025 JH Studio Photography · Todos los derechos reservados
   </footer>
 
+  <!-- Lightbox / Carrusel -->
+    <div class="lightbox" id="lightbox">
+    <span class="close" id="close">×</span>
+    <span class="prev" id="prev">‹</span>
+        <img id="lightbox-img" src="" alt="Imagen ampliada">
+    <div class="counter" id="counter">1 / 60</div>
+    <span class="next" id="next">›</span>
+  </div>
+
+    <script>
+    const images = document.querySelectorAll('.grid-item img');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const closeBtn = document.getElementById('close');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    const counter = document.getElementById('counter');
+
+    let currentIndex = 0;
+    let startX = 0;
+    let endX = 0;
+
+    images.forEach((img, index) => {
+      img.addEventListener('click', () => {
+        currentIndex = index;
+        showImage();
+        lightbox.classList.add('active');
+      });
+    });
+
+    function preloadImage(index) {
+      if (index < 0 || index >= images.length) return;
+      const img = new Image();
+      img.src = images[index].src;
+    }
+
+    function showImage() {
+      lightboxImg.src = images[currentIndex].src;
+      counter.textContent = `${currentIndex + 1} / ${images.length}`;
+      preloadImage(currentIndex + 1);
+      preloadImage(currentIndex - 1);
+    }
+
+    closeBtn.addEventListener('click', () => {
+      lightbox.classList.remove('active');
+    });
+
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      showImage();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % images.length;
+      showImage();
+    });
+
+    // Swipe móvil
+    lightbox.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+    });
+
+    lightbox.addEventListener('touchend', (e) => {
+      endX = e.changedTouches[0].clientX;
+      handleSwipe();
+    });
+
+    function handleSwipe() {
+      const diff = startX - endX;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) nextBtn.click();
+        else prevBtn.click();
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'Escape') lightbox.classList.remove('active');
+      if (e.key === 'ArrowLeft') prevBtn.click();
+      if (e.key === 'ArrowRight') nextBtn.click();
+    });
+  </script>
 </body>
 </html>
-
-
