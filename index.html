@@ -388,84 +388,99 @@
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const gallery = document.getElementById('gallery');
-      const totalImages = 60;
+  document.addEventListener('DOMContentLoaded', () => {
+    const gallery = document.getElementById('gallery');
+    const totalImages = 60; // Cambia si agregas o quitas fotos
 
-      // Generar las 60 fotos dinámicamente
-      for (let i = 1; i <= totalImages; i++) {
-        const item = document.createElement('div');
-        item.className = 'grid-item';
-        const img = document.createElement('img');
-        img.src = `img/foto${i}.jpg`;
-        img.alt = `Fotografía ${i} - JH Studio Photography`;
-        img.loading = 'lazy';
-        img.style.cursor = 'pointer';
-        item.appendChild(img);
-        gallery.appendChild(item);
-      }
+    for (let i = 1; i <= totalImages; i++) {
+      const item = document.createElement('div');
+      item.className = 'grid-item';
 
-      const images = document.querySelectorAll('.grid-item img');
-      const lightbox = document.getElementById('lightbox');
-      const lightboxImg = document.getElementById('lightbox-img');
-      const closeBtn = document.getElementById('close');
-      const prevBtn = document.getElementById('prev');
-      const nextBtn = document.getElementById('next');
-      const counter = document.getElementById('counter');
+      const img = document.createElement('img');
+      img.alt = `Fotografía ${i} - JH Studio Photography`;
+      img.loading = 'lazy';
+      img.style.cursor = 'pointer';
 
-      let currentIndex = 0;
+      // Primero intenta cargar .jpg
+      img.src = `img/foto${i}.jpg`;
 
-      function showImage() {
-        lightboxImg.src = images[currentIndex].src;
-        lightboxImg.alt = images[currentIndex].alt;
-        counter.textContent = `${currentIndex + 1} / ${totalImages}`;
-        lightbox.setAttribute('aria-hidden', 'false');
-      }
+      // Si el .jpg falla (404), carga el .png como fallback
+      img.onerror = () => {
+        img.src = `img/foto${i}.png`;
+        // Si también falla el .png, opcionalmente puedes poner una imagen placeholder
+        img.onerror = () => {
+          img.src = 'img/placeholder.jpg'; // Crea una imagen genérica si quieres
+          img.alt = 'Imagen no disponible';
+        };
+      };
 
-      images.forEach((img, index) => {
-        img.addEventListener('click', () => {
-          currentIndex = index;
-          showImage();
-          lightbox.classList.add('active');
-        });
-      });
+      item.appendChild(img);
+      gallery.appendChild(item);
+    }
 
-      closeBtn.addEventListener('click', closeLightbox);
-      function closeLightbox() {
-        lightbox.classList.remove('active');
-        lightbox.setAttribute('aria-hidden', 'true');
-      }
+    // === Resto del código del lightbox (sin cambios) ===
+    const images = document.querySelectorAll('.grid-item img');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const closeBtn = document.getElementById('close');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    const counter = document.getElementById('counter');
 
-      prevBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+    let currentIndex = 0;
+
+    function showImage() {
+      lightboxImg.src = images[currentIndex].src;
+      lightboxImg.alt = images[currentIndex].alt;
+      counter.textContent = `${currentIndex + 1} / ${totalImages}`;
+      lightbox.setAttribute('aria-hidden', 'false');
+    }
+
+    images.forEach((img, index) => {
+      img.addEventListener('click', () => {
+        currentIndex = index;
         showImage();
-      });
-
-      nextBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % totalImages;
-        showImage();
-      });
-
-      // Teclado
-      document.addEventListener('keydown', (e) => {
-        if (!lightbox.classList.contains('active')) return;
-        if (e.key === 'Escape') closeLightbox();
-        if (e.key === 'ArrowLeft') prevBtn.click();
-        if (e.key === 'ArrowRight') nextBtn.click();
-      });
-
-      // Swipe en móvil
-      let startX = 0;
-      lightbox.addEventListener('touchstart', e => startX = e.touches[0].clientX);
-      lightbox.addEventListener('touchend', e => {
-        const endX = e.changedTouches[0].clientX;
-        const diff = startX - endX;
-        if (Math.abs(diff) > 50) {
-          diff > 0 ? nextBtn.click() : prevBtn.click();
-        }
+        lightbox.classList.add('active');
       });
     });
-  </script>
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      lightbox.setAttribute('aria-hidden', 'true');
+    }
+
+    closeBtn.addEventListener('click', closeLightbox);
+
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+      showImage();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % totalImages;
+      showImage();
+    });
+
+    // Teclado
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') prevBtn.click();
+      if (e.key === 'ArrowRight') nextBtn.click();
+    });
+
+    // Swipe móvil
+    let startX = 0;
+    lightbox.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+    lightbox.addEventListener('touchend', e => {
+      const endX = e.changedTouches[0].clientX;
+      const diff = startX - endX;
+      if (Math.abs(diff) > 50) {
+        diff > 0 ? nextBtn.click() : prevBtn.click();
+      }
+    });
+  });
+</script>
 </body>
 </html>
 
