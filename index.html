@@ -389,7 +389,7 @@
 
       <div class="grid-item"><img src="img/foto31.jpg" alt="Fotografía 31"></div>
       <div class="grid-item"><img src="img/foto32.jpg" alt="Fotografía 32"></div>
-      <div class="grid-item"><img src="img/foto33.png" alt="Fotografía 33"></div>
+      <div class="grid-item"><img src="img/foto33.jpg" alt="Fotografía 33"></div>
       <div class="grid-item"><img src="img/foto34.jpg" alt="Fotografía 34"></div>
       <div class="grid-item"><img src="img/foto35.jpg" alt="Fotografía 35"></div>
       <div class="grid-item"><img src="img/foto36.jpg" alt="Fotografía 36"></div>
@@ -403,7 +403,7 @@
       <div class="grid-item"><img src="img/foto43.jpg" alt="Fotografía 43"></div>
       <div class="grid-item"><img src="img/foto44.jpg" alt="Fotografía 44"></div>
       <div class="grid-item"><img src="img/foto45.jpg" alt="Fotografía 45"></div>
-      <div class="grid-item"><img src="img/foto46.png" alt="Fotografía 46"></div>
+      <div class="grid-item"><img src="img/foto46.jpg" alt="Fotografía 46"></div>
       <div class="grid-item"><img src="img/foto47.jpg" alt="Fotografía 47"></div>
       <div class="grid-item"><img src="img/foto48.jpg" alt="Fotografía 48"></div>
       <div class="grid-item"><img src="img/foto49.jpg" alt="Fotografía 49"></div>
@@ -452,78 +452,85 @@
     <span class="next" id="next">›</span>
   </div>
 
-    <script>
-    const images = document.querySelectorAll('.grid-item img');
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const closeBtn = document.getElementById('close');
-    const prevBtn = document.getElementById('prev');
-    const nextBtn = document.getElementById('next');
-    const counter = document.getElementById('counter');
+      <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const images = document.querySelectorAll('.grid-item img');
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const closeBtn = document.getElementById('close');
+      const prevBtn = document.getElementById('prev');
+      const nextBtn = document.getElementById('next');
+      const counter = document.getElementById('counter');
 
-    let currentIndex = 0;
-    let startX = 0;
-    let endX = 0;
+      let currentIndex = 0;
+      let startX = 0;
+      let endX = 0;
 
-    images.forEach((img, index) => {
-      img.addEventListener('click', () => {
-        currentIndex = index;
-        showImage();
-        lightbox.classList.add('active');
-      });
-    });
-
-    function preloadImage(index) {
-      if (index < 0 || index >= images.length) return;
-      const img = new Image();
-      img.src = images[index].src;
-    }
-
-    function showImage() {
-      lightboxImg.src = images[currentIndex].src;
-      counter.textContent = `${currentIndex + 1} / ${images.length}`;
-      preloadImage(currentIndex + 1);
-      preloadImage(currentIndex - 1);
-    }
-
-    closeBtn.addEventListener('click', () => {
-      lightbox.classList.remove('active');
-    });
-
-    prevBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex - 1 + images.length) % images.length;
-      showImage();
-    });
-
-    nextBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex + 1) % images.length;
-      showImage();
-    });
-
-    // Swipe móvil
-    lightbox.addEventListener('touchstart', (e) => {
-      startX = e.touches[0].clientX;
-    });
-
-    lightbox.addEventListener('touchend', (e) => {
-      endX = e.changedTouches[0].clientX;
-      handleSwipe();
-    });
-
-    function handleSwipe() {
-      const diff = startX - endX;
-      if (Math.abs(diff) > 50) {
-        if (diff > 0) nextBtn.click();
-        else prevBtn.click();
+      if (images.length === 0) {
+        console.error('No se encontraron imágenes en la galería');
+        return;
       }
-    }
 
-    document.addEventListener('keydown', (e) => {
-      if (!lightbox.classList.contains('active')) return;
-      if (e.key === 'Escape') lightbox.classList.remove('active');
-      if (e.key === 'ArrowLeft') prevBtn.click();
-      if (e.key === 'ArrowRight') nextBtn.click();
+      images.forEach((img, index) => {
+        img.style.cursor = 'pointer';
+        img.addEventListener('click', () => {
+          currentIndex = index;
+          showImage();
+          lightbox.classList.add('active');
+        });
+      });
+
+      function preloadImage(index) {
+        if (index < 0 || index >= images.length) return;
+        const preload = new Image();
+        preload.src = images[index].src;
+      }
+
+      function showImage() {
+        lightboxImg.src = images[currentIndex].src;
+        counter.textContent = `${currentIndex + 1} / ${images.length}`;
+        preloadImage(currentIndex + 1);
+        preloadImage(currentIndex - 1);
+      }
+
+      closeBtn.addEventListener('click', () => {
+        lightbox.classList.remove('active');
+      });
+
+      prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        showImage();
+      });
+
+      nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % images.length;
+        showImage();
+      });
+
+      // Swipe móvil
+      lightbox.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+      });
+
+      lightbox.addEventListener('touchend', (e) => {
+        endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+        if (Math.abs(diff) > 50) {
+          if (diff > 0) nextBtn.click();
+          else prevBtn.click();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (!lightbox.classList.contains('active')) return;
+        if (e.key === 'Escape') lightbox.classList.remove('active');
+        if (e.key === 'ArrowLeft') prevBtn.click();
+        if (e.key === 'ArrowRight') nextBtn.click();
+      });
     });
   </script>
 </body>
 </html>
+
+
+
