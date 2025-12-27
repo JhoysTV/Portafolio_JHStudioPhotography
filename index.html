@@ -264,24 +264,15 @@
   <section id="portfolio">
     <h3 class="section-title">Portafolio</h3>
     <div class="grid">
-      <div class="grid-item">
-        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee" alt="Fotografía 1">
-      </div>
-      <div class="grid-item">
-        <img src="https://images.unsplash.com/photo-1499084732479-de2c02d45fc4" alt="Fotografía 2">
-      </div>
-      <div class="grid-item">
-        <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb" alt="Fotografía 3">
-      </div>
-      <div class="grid-item">
-        <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429" alt="Fotografía 4">
-      </div>
-      <div class="grid-item">
-        <img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7" alt="Fotografía 5">
-      </div>
-      <div class="grid-item">
-        <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429" alt="Fotografía 6">
-      </div>
+      <!-- Fotografías locales: foto1.jpg a foto60.jpg -->
+      <!-- Asegúrate de que las imágenes estén en la carpeta /img -->
+      
+      <!-- Inicio galería -->
+      ${Array.from({ length: 60 }, (_, i) => `      <div class="grid-item">
+        <img src="img/foto${i + 1}.jpg" alt="Fotografía ${i + 1}">
+      </div>`).join("
+")}
+      <!-- Fin galería -->
     </div>
   </section>
 
@@ -307,3 +298,4 @@
 
 </body>
 </html>
+
