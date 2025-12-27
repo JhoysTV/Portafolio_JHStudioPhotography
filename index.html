@@ -12,8 +12,6 @@
   <style>
     :root {
       --bg-dark: #0f0f0f;
-      --bg-light: #f7f7f7;
-      --text-dark: #111;
       --text-light: #f1f1f1;
       --accent: #c59d5f;
       --gray: #9a9a9a;
@@ -42,7 +40,12 @@
       display: block;
     }
 
-    /* ---------- Header ---------- */
+    /* Smooth scroll para los enlaces internos */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Header */
     header {
       position: fixed;
       top: 0;
@@ -83,7 +86,7 @@
       color: var(--accent);
     }
 
-    /* ---------- Hero ---------- */
+    /* Hero */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -125,7 +128,7 @@
       color: var(--bg-dark);
     }
 
-    /* ---------- Sections ---------- */
+    /* Sections */
     section {
       padding: 100px 8%;
     }
@@ -137,7 +140,7 @@
       text-align: center;
     }
 
-    /* ---------- About ---------- */
+    /* About */
     .about {
       max-width: 900px;
       margin: auto;
@@ -149,7 +152,7 @@
       font-size: 0.95rem;
     }
 
-    /* ---------- Portfolio ---------- */
+    /* Portfolio */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -177,14 +180,14 @@
       background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
       opacity: 0;
       transition: opacity 0.4s ease;
-      pointer-events: none; /* Permite clics sobre la imagen */
+      pointer-events: none;
     }
 
     .grid-item:hover::after {
       opacity: 1;
     }
 
-    /* ---------- Contact ---------- */
+    /* Contact */
     .contact {
       text-align: center;
     }
@@ -206,7 +209,7 @@
       border-bottom: 1px solid var(--accent);
     }
 
-    /* ---------- Footer ---------- */
+    /* Footer */
     footer {
       padding: 40px 8%;
       text-align: center;
@@ -215,45 +218,16 @@
       border-top: 1px solid #222;
     }
 
-    /* ---------- Responsive ---------- */
-    @media (max-width: 768px) {
-      header {
-        padding: 15px 6%;
-      }
-
-      nav a {
-        margin-left: 15px;
-      }
-
-      section {
-        padding: 80px 6%;
-      }
-
-      .lightbox .prev,
-      .lightbox .next {
-        font-size: 2.5rem;
-        top: 50%;
-        transform: translateY(-50%);
-      }
-    }
-
-      nav a {
-        margin-left: 15px;
-      }
-
-      section {
-        padding: 80px 6%;
-      }
-    }
-      /* ---------- Lightbox ---------- */
+    /* Lightbox - CORREGIDO */
     .lightbox {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.9);
+      background: rgba(0,0,0,0.95);
       display: none;
       align-items: center;
       justify-content: center;
       z-index: 2000;
+      padding: 20px; /* Espacio para no pegar a los bordes */
     }
 
     .lightbox.active {
@@ -263,7 +237,15 @@
     .lightbox img {
       max-width: 90%;
       max-height: 80vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
       animation: slideIn 0.45s ease;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .lightbox .counter {
@@ -274,26 +256,26 @@
       letter-spacing: 1px;
     }
 
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateX(30px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-      to { opacity: 1; transform: scale(1); }
+    .lightbox button {
+      position: absolute;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 3rem;
+      cursor: pointer;
+      padding: 10px;
+      opacity: 0.7;
+      transition: opacity 0.3s;
     }
 
-    .lightbox .close,
-    .lightbox .prev,
-    .lightbox .next {
-      position: absolute;
-      color: #fff;
-      font-size: 2rem;
-      cursor: pointer;
-      user-select: none;
+    .lightbox button:hover {
+      opacity: 1;
     }
 
     .lightbox .close {
       top: 20px;
       right: 30px;
+      font-size: 2.5rem;
     }
 
     .lightbox .prev {
@@ -303,6 +285,30 @@
     .lightbox .next {
       right: 30px;
     }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        padding: 15px 6%;
+      }
+
+      nav a {
+        margin-left: 15px;
+        font-size: 0.85rem;
+      }
+
+      section {
+        padding: 80px 6%;
+      }
+
+      .hero {
+        padding: 0 6%;
+      }
+
+      .lightbox button {
+        font-size: 2.5rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -310,7 +316,7 @@
   <!-- Header -->
   <header>
     <h1>
-      <img src="img/logotipo.png" alt="JH Studio Photography" class="logo">
+      <img src="img/logotipo.png" alt="JH Studio Photography" class="logo" onerror="this.style.display='none'">
       JH Studio
     </h1>
     <nav>
@@ -349,78 +355,7 @@
   <!-- Portfolio -->
   <section id="portfolio">
     <h3 class="section-title">Portafolio</h3>
-    <div class="grid">
-
-      <!-- Fotografías locales: foto1.jpg a foto60.jpg -->
-      <!-- Las imágenes deben estar en la carpeta /img -->
-
-      <div class="grid-item"><img src="img/foto1.jpg" alt="Fotografía 1"></div>
-      <div class="grid-item"><img src="img/foto2.jpg" alt="Fotografía 2"></div>
-      <div class="grid-item"><img src="img/foto3.jpg" alt="Fotografía 3"></div>
-      <div class="grid-item"><img src="img/foto4.jpg" alt="Fotografía 4"></div>
-      <div class="grid-item"><img src="img/foto5.jpg" alt="Fotografía 5"></div>
-      <div class="grid-item"><img src="img/foto6.jpg" alt="Fotografía 6"></div>
-      <div class="grid-item"><img src="img/foto7.jpg" alt="Fotografía 7"></div>
-      <div class="grid-item"><img src="img/foto8.jpg" alt="Fotografía 8"></div>
-      <div class="grid-item"><img src="img/foto9.jpg" alt="Fotografía 9"></div>
-      <div class="grid-item"><img src="img/foto10.jpg" alt="Fotografía 10"></div>
-
-      <div class="grid-item"><img src="img/foto11.jpg" alt="Fotografía 11"></div>
-      <div class="grid-item"><img src="img/foto12.jpg" alt="Fotografía 12"></div>
-      <div class="grid-item"><img src="img/foto13.jpg" alt="Fotografía 13"></div>
-      <div class="grid-item"><img src="img/foto14.jpg" alt="Fotografía 14"></div>
-      <div class="grid-item"><img src="img/foto15.jpg" alt="Fotografía 15"></div>
-      <div class="grid-item"><img src="img/foto16.jpg" alt="Fotografía 16"></div>
-      <div class="grid-item"><img src="img/foto17.jpg" alt="Fotografía 17"></div>
-      <div class="grid-item"><img src="img/foto18.jpg" alt="Fotografía 18"></div>
-      <div class="grid-item"><img src="img/foto19.jpg" alt="Fotografía 19"></div>
-      <div class="grid-item"><img src="img/foto20.jpg" alt="Fotografía 20"></div>
-
-      <div class="grid-item"><img src="img/foto21.jpg" alt="Fotografía 21"></div>
-      <div class="grid-item"><img src="img/foto22.jpg" alt="Fotografía 22"></div>
-      <div class="grid-item"><img src="img/foto23.jpg" alt="Fotografía 23"></div>
-      <div class="grid-item"><img src="img/foto24.jpg" alt="Fotografía 24"></div>
-      <div class="grid-item"><img src="img/foto25.jpg" alt="Fotografía 25"></div>
-      <div class="grid-item"><img src="img/foto26.jpg" alt="Fotografía 26"></div>
-      <div class="grid-item"><img src="img/foto27.jpg" alt="Fotografía 27"></div>
-      <div class="grid-item"><img src="img/foto28.jpg" alt="Fotografía 28"></div>
-      <div class="grid-item"><img src="img/foto29.jpg" alt="Fotografía 29"></div>
-      <div class="grid-item"><img src="img/foto30.jpg" alt="Fotografía 30"></div>
-
-      <div class="grid-item"><img src="img/foto31.jpg" alt="Fotografía 31"></div>
-      <div class="grid-item"><img src="img/foto32.jpg" alt="Fotografía 32"></div>
-      <div class="grid-item"><img src="img/foto33.jpg" alt="Fotografía 33"></div>
-      <div class="grid-item"><img src="img/foto34.jpg" alt="Fotografía 34"></div>
-      <div class="grid-item"><img src="img/foto35.jpg" alt="Fotografía 35"></div>
-      <div class="grid-item"><img src="img/foto36.jpg" alt="Fotografía 36"></div>
-      <div class="grid-item"><img src="img/foto37.jpg" alt="Fotografía 37"></div>
-      <div class="grid-item"><img src="img/foto38.jpg" alt="Fotografía 38"></div>
-      <div class="grid-item"><img src="img/foto39.jpg" alt="Fotografía 39"></div>
-      <div class="grid-item"><img src="img/foto40.jpg" alt="Fotografía 40"></div>
-
-      <div class="grid-item"><img src="img/foto41.jpg" alt="Fotografía 41"></div>
-      <div class="grid-item"><img src="img/foto42.jpg" alt="Fotografía 42"></div>
-      <div class="grid-item"><img src="img/foto43.jpg" alt="Fotografía 43"></div>
-      <div class="grid-item"><img src="img/foto44.jpg" alt="Fotografía 44"></div>
-      <div class="grid-item"><img src="img/foto45.jpg" alt="Fotografía 45"></div>
-      <div class="grid-item"><img src="img/foto46.jpg" alt="Fotografía 46"></div>
-      <div class="grid-item"><img src="img/foto47.jpg" alt="Fotografía 47"></div>
-      <div class="grid-item"><img src="img/foto48.jpg" alt="Fotografía 48"></div>
-      <div class="grid-item"><img src="img/foto49.jpg" alt="Fotografía 49"></div>
-      <div class="grid-item"><img src="img/foto50.jpg" alt="Fotografía 50"></div>
-
-      <div class="grid-item"><img src="img/foto51.jpg" alt="Fotografía 51"></div>
-      <div class="grid-item"><img src="img/foto52.jpg" alt="Fotografía 52"></div>
-      <div class="grid-item"><img src="img/foto53.jpg" alt="Fotografía 53"></div>
-      <div class="grid-item"><img src="img/foto54.jpg" alt="Fotografía 54"></div>
-      <div class="grid-item"><img src="img/foto55.jpg" alt="Fotografía 55"></div>
-      <div class="grid-item"><img src="img/foto56.jpg" alt="Fotografía 56"></div>
-      <div class="grid-item"><img src="img/foto57.jpg" alt="Fotografía 57"></div>
-      <div class="grid-item"><img src="img/foto58.jpg" alt="Fotografía 58"></div>
-      <div class="grid-item"><img src="img/foto59.jpg" alt="Fotografía 59"></div>
-      <div class="grid-item"><img src="img/foto60.jpg" alt="Fotografía 60"></div>
-
-    </div>
+    <div class="grid" id="gallery"></div>
   </section>
 
   <!-- Contact -->
@@ -432,8 +367,8 @@
         través de mis canales principales.
       </p>
       <div class="contact-links">
-        <a href="#" target="_blank">Instagram (DM)</a>
-        <a href="#" target="_blank">WhatsApp</a>
+        <a href="https://instagram.com/tuusuario" target="_blank" rel="noopener">Instagram (DM)</a>
+        <a href="https://wa.me/1234567890" target="_blank" rel="noopener">WhatsApp</a>
       </div>
     </div>
   </section>
@@ -443,17 +378,33 @@
     © 2025 JH Studio Photography · Todos los derechos reservados
   </footer>
 
-  <!-- Lightbox / Carrusel -->
-    <div class="lightbox" id="lightbox">
-    <span class="close" id="close">×</span>
-    <span class="prev" id="prev">‹</span>
-        <img id="lightbox-img" src="" alt="Imagen ampliada">
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+    <button class="close" id="close" aria-label="Cerrar">×</button>
+    <button class="prev" id="prev" aria-label="Anterior">‹</button>
+    <button class="next" id="next" aria-label="Siguiente">›</button>
+    <img id="lightbox-img" src="" alt="Imagen ampliada del portafolio">
     <div class="counter" id="counter">1 / 60</div>
-    <span class="next" id="next">›</span>
   </div>
 
-      <script>
+  <script>
     document.addEventListener('DOMContentLoaded', () => {
+      const gallery = document.getElementById('gallery');
+      const totalImages = 60;
+
+      // Generar las 60 fotos dinámicamente
+      for (let i = 1; i <= totalImages; i++) {
+        const item = document.createElement('div');
+        item.className = 'grid-item';
+        const img = document.createElement('img');
+        img.src = `img/foto${i}.jpg`;
+        img.alt = `Fotografía ${i} - JH Studio Photography`;
+        img.loading = 'lazy';
+        img.style.cursor = 'pointer';
+        item.appendChild(img);
+        gallery.appendChild(item);
+      }
+
       const images = document.querySelectorAll('.grid-item img');
       const lightbox = document.getElementById('lightbox');
       const lightboxImg = document.getElementById('lightbox-img');
@@ -463,16 +414,15 @@
       const counter = document.getElementById('counter');
 
       let currentIndex = 0;
-      let startX = 0;
-      let endX = 0;
 
-      if (images.length === 0) {
-        console.error('No se encontraron imágenes en la galería');
-        return;
+      function showImage() {
+        lightboxImg.src = images[currentIndex].src;
+        lightboxImg.alt = images[currentIndex].alt;
+        counter.textContent = `${currentIndex + 1} / ${totalImages}`;
+        lightbox.setAttribute('aria-hidden', 'false');
       }
 
       images.forEach((img, index) => {
-        img.style.cursor = 'pointer';
         img.addEventListener('click', () => {
           currentIndex = index;
           showImage();
@@ -480,57 +430,43 @@
         });
       });
 
-      function preloadImage(index) {
-        if (index < 0 || index >= images.length) return;
-        const preload = new Image();
-        preload.src = images[index].src;
-      }
-
-      function showImage() {
-        lightboxImg.src = images[currentIndex].src;
-        counter.textContent = `${currentIndex + 1} / ${images.length}`;
-        preloadImage(currentIndex + 1);
-        preloadImage(currentIndex - 1);
-      }
-
-      closeBtn.addEventListener('click', () => {
+      closeBtn.addEventListener('click', closeLightbox);
+      function closeLightbox() {
         lightbox.classList.remove('active');
-      });
+        lightbox.setAttribute('aria-hidden', 'true');
+      }
 
       prevBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        currentIndex = (currentIndex - 1 + totalImages) % totalImages;
         showImage();
       });
 
       nextBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % images.length;
+        currentIndex = (currentIndex + 1) % totalImages;
         showImage();
       });
 
-      // Swipe móvil
-      lightbox.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-      });
-
-      lightbox.addEventListener('touchend', (e) => {
-        endX = e.changedTouches[0].clientX;
-        const diff = startX - endX;
-        if (Math.abs(diff) > 50) {
-          if (diff > 0) nextBtn.click();
-          else prevBtn.click();
-        }
-      });
-
+      // Teclado
       document.addEventListener('keydown', (e) => {
         if (!lightbox.classList.contains('active')) return;
-        if (e.key === 'Escape') lightbox.classList.remove('active');
+        if (e.key === 'Escape') closeLightbox();
         if (e.key === 'ArrowLeft') prevBtn.click();
         if (e.key === 'ArrowRight') nextBtn.click();
+      });
+
+      // Swipe en móvil
+      let startX = 0;
+      lightbox.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+      lightbox.addEventListener('touchend', e => {
+        const endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+        if (Math.abs(diff) > 50) {
+          diff > 0 ? nextBtn.click() : prevBtn.click();
+        }
       });
     });
   </script>
 </body>
 </html>
-
 
 
