@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JH Studio Photography</title>
+  <meta name="description" content="JH Studio Photography – Portafolio fotográfico. Inspirando a observar, capturar y sentir el momento." />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #0f0f0f;
+      --bg-light: #f7f7f7;
+      --text-dark: #111;
+      --text-light: #f1f1f1;
+      --accent: #c59d5f;
+      --gray: #9a9a9a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* ---------- Header ---------- */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15, 15, 15, 0.85);
+      backdrop-filter: blur(6px);
+      z-index: 1000;
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      margin-left: 25px;
+      font-size: 0.9rem;
+      color: var(--gray);
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 8%;
+      background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.85)),
+                  url('https://images.unsplash.com/photo-1492724441997-5dc865305da7') center/cover no-repeat;
+    }
+
+    .hero-content {
+      max-width: 700px;
+    }
+
+    .hero h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 1rem;
+      color: #ddd;
+      margin-bottom: 35px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 0.75rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: var(--accent);
+      color: var(--bg-dark);
+    }
+
+    /* ---------- Sections ---------- */
+    section {
+      padding: 100px 8%;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    /* ---------- About ---------- */
+    .about {
+      max-width: 900px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .about p {
+      color: #ccc;
+      font-size: 0.95rem;
+    }
+
+    /* ---------- Portfolio ---------- */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .grid-item {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .grid-item img {
+      transition: transform 0.6s ease;
+    }
+
+    .grid-item:hover img {
+      transform: scale(1.1);
+    }
+
+    .grid-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .grid-item:hover::after {
+      opacity: 1;
+    }
+
+    /* ---------- Contact ---------- */
+    .contact {
+      text-align: center;
+    }
+
+    .contact p {
+      color: #ccc;
+      margin-bottom: 25px;
+    }
+
+    .contact-links a {
+      margin: 0 15px;
+      font-size: 0.9rem;
+      color: var(--accent);
+      border-bottom: 1px solid transparent;
+      transition: border 0.3s ease;
+    }
+
+    .contact-links a:hover {
+      border-bottom: 1px solid var(--accent);
+    }
+
+    /* ---------- Footer ---------- */
+    footer {
+      padding: 40px 8%;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #777;
+      border-top: 1px solid #222;
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 768px) {
+      header {
+        padding: 15px 6%;
+      }
+
+      nav a {
+        margin-left: 15px;
+      }
+
+      section {
+        padding: 80px 6%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>JH Studio</h1>
+    <nav>
+      <a href="#home">Inicio</a>
+      <a href="#about">Sobre mí</a>
+      <a href="#portfolio">Portafolio</a>
+      <a href="#contact">Contacto</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h2>Capturar momentos<br>es aprender a mirar</h2>
+      <p>
+        JH Studio Photography es un espacio creativo donde la fotografía se convierte
+        en una forma de observar el mundo con más intención, calma y sensibilidad.
+      </p>
+      <a href="#portfolio" class="btn">Ver Portafolio</a>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <h3 class="section-title">Sobre JH Studio</h3>
+    <div class="about">
+      <p>
+        JH Studio Photography nace como una marca creativa enfocada en inspirar a
+        personas entre 20 y 40 años a capturar momentos cotidianos y a desarrollar
+        una mirada más consciente del entorno. No se trata solo de tomar fotografías,
+        sino de contar historias visuales que conecten con emociones reales.
+      </p>
+    </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section id="portfolio">
+    <h3 class="section-title">Portafolio</h3>
+    <div class="grid">
+      <div class="grid-item">
+        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee" alt="Fotografía 1">
+      </div>
+      <div class="grid-item">
+        <img src="https://images.unsplash.com/photo-1499084732479-de2c02d45fc4" alt="Fotografía 2">
+      </div>
+      <div class="grid-item">
+        <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb" alt="Fotografía 3">
+      </div>
+      <div class="grid-item">
+        <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429" alt="Fotografía 4">
+      </div>
+      <div class="grid-item">
+        <img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7" alt="Fotografía 5">
+      </div>
+      <div class="grid-item">
+        <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429" alt="Fotografía 6">
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h3 class="section-title">Contacto</h3>
+    <div class="contact">
+      <p>
+        Para colaboraciones, inspiración o contacto directo, puedes escribirme a
+        través de mis canales principales.
+      </p>
+      <div class="contact-links">
+        <a href="#" target="_blank">Instagram (DM)</a>
+        <a href="#" target="_blank">WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    © 2025 JH Studio Photography · Todos los derechos reservados
+  </footer>
+
+</body>
+</html>
