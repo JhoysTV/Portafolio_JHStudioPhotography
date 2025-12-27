@@ -390,7 +390,7 @@
   <script>
   document.addEventListener('DOMContentLoaded', () => {
     const gallery = document.getElementById('gallery');
-    const totalImages = 61; // Cambia si agregas o quitas fotos
+    const totalImages = 60; // Cambia este número si tienes más o menos fotos
 
     for (let i = 1; i <= totalImages; i++) {
       const item = document.createElement('div');
@@ -401,16 +401,33 @@
       img.loading = 'lazy';
       img.style.cursor = 'pointer';
 
-      // Primero intenta cargar .jpg
+      // Intentamos cargar .jpg primero
       img.src = `img/foto${i}.jpg`;
 
-      // Si el .jpg falla (404), carga el .png como fallback
-      img.onerror = () => {
-        img.src = `img/foto${i}.png`;
-        // Si también falla el .png, opcionalmente puedes poner una imagen placeholder
-        img.onerror = () => {
-          img.src = 'img/placeholder.jpg'; // Crea una imagen genérica si quieres
-          img.alt = 'Imagen no disponible';
+      // Si falla .jpg, intentamos .png
+      img.onerror = function() {
+        this.src = `img/foto${i}.png`;
+
+        // Si también falla .png, mostramos un placeholder visual SIN cargar otra imagen externa
+        this.onerror = function() {
+          // Quitamos el onerror para evitar bucles infinitos
+          this.onerror = null;
+          this.src = ''; // Limpiamos el src
+
+          // Estilo de fallback bonito: fondo gris oscuro con texto
+          this.style.backgroundColor = '#222';
+          this.style.display = 'flex';
+          this.style.alignItems = 'center';
+          this.style.justifyContent = 'center';
+          this.style.color = '#666';
+          this.style.fontSize = '1.2rem';
+          this.style.textAlign = 'center';
+          this.style.padding = '20px';
+          this.style.objectFit = 'contain';
+
+          // Creamos un data URL simple con un icono SVG de cámara rota
+          this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODBweCIgaGVpZ2h0PSI4MHB4IiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEyIDJDOC4xMyAyIDUgNS4xMyA1IDljMCAzLjg3IDMuMTMgNyA3IDdzNy0zLjEzIDctN0MxOSAxMy4xMyAxNS44NyAxNiAxMiAxNnoiIGZpbGw9IiM2NjYiLz48cGF0aCBkPSJNMTYgOGgtOHY4aDh6IiBmaWxsPSIjOTk5Ii8+PHBhdGggZD0iTTE4IDE2SDZ2MmgxMnYtMnoiIGZpbGw9IiM2NjYiLz48L3N2Zz4=';
+          this.alt = 'Imagen no disponible';
         };
       };
 
@@ -418,7 +435,7 @@
       gallery.appendChild(item);
     }
 
-    // === Resto del código del lightbox (sin cambios) ===
+    // === Lightbox (sin cambios importantes) ===
     const images = document.querySelectorAll('.grid-item img');
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
@@ -430,7 +447,8 @@
     let currentIndex = 0;
 
     function showImage() {
-      lightboxImg.src = images[currentIndex].src;
+      // Usamos la imagen actual del grid (ya tiene el src correcto con fallback)
+      lightboxImg.src = images[currentIndex].src || '';
       lightboxImg.alt = images[currentIndex].alt;
       counter.textContent = `${currentIndex + 1} / ${totalImages}`;
       lightbox.setAttribute('aria-hidden', 'false');
@@ -450,18 +468,16 @@
     }
 
     closeBtn.addEventListener('click', closeLightbox);
-
     prevBtn.addEventListener('click', () => {
       currentIndex = (currentIndex - 1 + totalImages) % totalImages;
       showImage();
     });
-
     nextBtn.addEventListener('click', () => {
       currentIndex = (currentIndex + 1) % totalImages;
       showImage();
     });
 
-    // Teclado
+    // Teclado y swipe (igual que antes)
     document.addEventListener('keydown', (e) => {
       if (!lightbox.classList.contains('active')) return;
       if (e.key === 'Escape') closeLightbox();
@@ -469,7 +485,6 @@
       if (e.key === 'ArrowRight') nextBtn.click();
     });
 
-    // Swipe móvil
     let startX = 0;
     lightbox.addEventListener('touchstart', e => startX = e.touches[0].clientX);
     lightbox.addEventListener('touchend', e => {
