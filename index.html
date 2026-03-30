@@ -3,18 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JH Studio Photography</title>
-  <meta name="description" content="JH Studio Photography – Portafolio fotográfico. Inspirando a observar, capturar y sentir el momento." />
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>JH Studio Photography | Portafolio fotográfico</title>
+  <meta name="description" content="Portafolio fotográfico de JH Studio Photography. Historias visuales con una mirada consciente, sensible y creativa." />
+  <meta name="theme-color" content="#111111" />
+  <meta property="og:title" content="JH Studio Photography" />
+  <meta property="og:description" content="Portafolio fotográfico con una propuesta visual elegante, emocional y contemporánea." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_ES" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet" />
 
   <style>
     :root {
       --bg-dark: #0f0f0f;
-      --text-light: #f1f1f1;
+      --bg-soft: #171717;
+      --text-light: #f2f2f2;
+      --text-muted: #cfcfcf;
       --accent: #c59d5f;
-      --gray: #9a9a9a;
+      --accent-soft: rgba(197, 157, 95, 0.18);
+      --border: rgba(255, 255, 255, 0.08);
+      --shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+      --radius: 20px;
+      --header-height: 84px;
     }
 
     * {
@@ -23,11 +35,23 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: var(--bg-dark);
+      background:
+        radial-gradient(circle at top, rgba(197, 157, 95, 0.12), transparent 28%),
+        linear-gradient(180deg, #111111 0%, #0b0b0b 100%);
       color: var(--text-light);
       line-height: 1.6;
+      text-rendering: optimizeLegibility;
+      min-height: 100vh;
+    }
+
+    body.lightbox-open {
+      overflow: hidden;
     }
 
     a {
@@ -40,194 +64,311 @@
       display: block;
     }
 
-    /* Smooth scroll para los enlaces internos */
-    html {
-      scroll-behavior: smooth;
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
     }
 
-    /* Header */
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: 16px;
+      top: -48px;
+      background: var(--accent);
+      color: #111;
+      padding: 10px 14px;
+      border-radius: 999px;
+      z-index: 2001;
+      transition: top 0.2s ease;
+    }
+
+    .skip-link:focus {
+      top: 16px;
+    }
+
     header {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      padding: 20px 8%;
+      min-height: var(--header-height);
+      padding: 18px 8%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(15, 15, 15, 0.85);
-      backdrop-filter: blur(6px);
+      gap: 20px;
+      background: rgba(15, 15, 15, 0.82);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
       z-index: 1000;
     }
 
-    header h1 {
-      display: flex;
+    .brand {
+      display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-text {
       font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       font-weight: 600;
-      letter-spacing: 1px;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
     }
 
     .logo {
-      height: 40px;
+      height: 42px;
       width: auto;
+      flex-shrink: 0;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 18px;
     }
 
     nav a {
-      margin-left: 25px;
-      font-size: 0.9rem;
-      color: var(--gray);
-      transition: color 0.3s ease;
+      font-size: 0.95rem;
+      color: #b7b7b7;
+      transition: color 0.25s ease;
     }
 
-    nav a:hover {
+    nav a:hover,
+    nav a:focus-visible {
       color: var(--accent);
     }
 
-    /* Hero */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 0 8%;
-      background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.85)),
-                  url('https://images.unsplash.com/photo-1492724441997-5dc865305da7') center/cover no-repeat;
+    main {
+      display: block;
     }
 
-    .hero-content {
-      max-width: 700px;
-    }
-
-    .hero h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      margin-bottom: 20px;
-    }
-
-    .hero p {
-      font-size: 1rem;
-      color: #ddd;
-      margin-bottom: 35px;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 12px 30px;
-      border: 1px solid var(--accent);
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      font-size: 0.75rem;
-      transition: all 0.3s ease;
-    }
-
-    .btn:hover {
-      background-color: var(--accent);
-      color: var(--bg-dark);
-    }
-
-    /* Sections */
     section {
-      padding: 100px 8%;
+      padding: 96px 8%;
+      scroll-margin-top: calc(var(--header-height) + 20px);
+    }
+
+    section:not(.hero) {
+      content-visibility: auto;
+      contain-intrinsic-size: 1px 700px;
     }
 
     .section-title {
       font-family: 'Playfair Display', serif;
-      font-size: 2.2rem;
-      margin-bottom: 40px;
+      font-size: clamp(2rem, 4vw, 2.7rem);
+      margin-bottom: 18px;
       text-align: center;
     }
 
-    /* About */
-    .about {
-      max-width: 900px;
-      margin: auto;
+    .section-intro {
+      max-width: 760px;
+      margin: 0 auto 40px;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: calc(var(--header-height) + 20px);
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.82)),
+        url('https://images.unsplash.com/photo-1492724441997-5dc865305da7?auto=format&fit=crop&w=1800&q=80') center/cover no-repeat;
+    }
+
+    .hero-content {
+      max-width: 760px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 16px;
+      padding: 7px 14px;
+      border: 1px solid var(--accent-soft);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      color: #efe2c8;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 6vw, 5.1rem);
+      line-height: 1.08;
+      margin-bottom: 20px;
+      text-wrap: balance;
+    }
+
+    .hero p {
+      max-width: 640px;
+      font-size: 1.05rem;
+      color: #dddddd;
+      margin-bottom: 34px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 12px 26px;
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.75rem;
+      transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+    }
+
+    .btn:hover,
+    .btn:focus-visible {
+      background-color: var(--accent);
+      color: #111111;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      border-color: rgba(255, 255, 255, 0.18);
+      color: var(--text-light);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .btn-secondary:hover,
+    .btn-secondary:focus-visible {
+      border-color: transparent;
+    }
+
+    .about-card,
+    .contact-card {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 34px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .about-card p,
+    .contact-card p {
+      color: var(--text-muted);
+      font-size: 1rem;
       text-align: center;
     }
 
-    .about p {
-      color: #ccc;
-      font-size: 0.95rem;
-    }
-
-    /* Portfolio */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 20px;
     }
 
     .grid-item {
       position: relative;
       overflow: hidden;
+      padding: 0;
+      border: 0;
+      border-radius: 18px;
       cursor: pointer;
+      background: var(--bg-soft);
+      box-shadow: var(--shadow);
+      aspect-ratio: 4 / 5;
+      isolation: isolate;
     }
 
     .grid-item img {
-      transition: transform 0.6s ease;
-    }
-
-    .grid-item:hover img {
-      transform: scale(1.1);
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease, filter 0.4s ease;
+      background: #1a1a1a;
     }
 
     .grid-item::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.72), transparent 60%);
       opacity: 0;
-      transition: opacity 0.4s ease;
+      transition: opacity 0.35s ease;
       pointer-events: none;
     }
 
-    .grid-item:hover::after {
+    .grid-item:hover img,
+    .grid-item:focus-visible img {
+      transform: scale(1.06);
+      filter: saturate(1.05);
+    }
+
+    .grid-item:hover::after,
+    .grid-item:focus-visible::after {
       opacity: 1;
     }
 
-    /* Contact */
-    .contact {
-      text-align: center;
-    }
-
-    .contact p {
-      color: #ccc;
-      margin-bottom: 25px;
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 24px;
     }
 
     .contact-links a {
-      margin: 0 15px;
-      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 11px 20px;
+      border-radius: 999px;
       color: var(--accent);
-      border-bottom: 1px solid transparent;
-      transition: border 0.3s ease;
+      background: rgba(197, 157, 95, 0.08);
+      border: 1px solid rgba(197, 157, 95, 0.22);
+      transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
     }
 
-    .contact-links a:hover {
-      border-bottom: 1px solid var(--accent);
+    .contact-links a:hover,
+    .contact-links a:focus-visible {
+      background: var(--accent);
+      color: #111111;
+      transform: translateY(-1px);
     }
 
-    /* Footer */
     footer {
-      padding: 40px 8%;
+      padding: 36px 8% 42px;
       text-align: center;
-      font-size: 0.75rem;
-      color: #777;
-      border-top: 1px solid #222;
+      font-size: 0.82rem;
+      color: #8d8d8d;
+      border-top: 1px solid var(--border);
     }
 
-    /* Lightbox - CORREGIDO */
     .lightbox {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.95);
+      background: rgba(0, 0, 0, 0.96);
       display: none;
       align-items: center;
       justify-content: center;
       z-index: 2000;
-      padding: 20px; /* Espacio para no pegar a los bordes */
+      padding: 24px;
     }
 
     .lightbox.active {
@@ -235,91 +376,171 @@
     }
 
     .lightbox img {
-      max-width: 90%;
+      max-width: min(92vw, 1320px);
       max-height: 80vh;
       object-fit: contain;
-      border-radius: 8px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-      animation: slideIn 0.45s ease;
-    }
-
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .lightbox .counter {
-      position: absolute;
-      bottom: 30px;
-      color: #ccc;
-      font-size: 0.9rem;
-      letter-spacing: 1px;
+      border-radius: 14px;
+      box-shadow: 0 14px 42px rgba(0, 0, 0, 0.65);
+      animation: slide-in 0.35s ease;
     }
 
     .lightbox button {
       position: absolute;
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 3rem;
+      border: 0;
+      background: rgba(255, 255, 255, 0.06);
+      color: #ffffff;
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
       cursor: pointer;
-      padding: 10px;
-      opacity: 0.7;
-      transition: opacity 0.3s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      transition: background-color 0.25s ease, transform 0.25s ease;
     }
 
-    .lightbox button:hover {
-      opacity: 1;
+    .lightbox button:hover,
+    .lightbox button:focus-visible {
+      background: rgba(255, 255, 255, 0.14);
+      transform: scale(1.04);
     }
 
     .lightbox .close {
-      top: 20px;
-      right: 30px;
-      font-size: 2.5rem;
+      top: 22px;
+      right: 26px;
+      font-size: 1.6rem;
     }
 
     .lightbox .prev {
-      left: 30px;
+      left: 24px;
     }
 
     .lightbox .next {
-      right: 30px;
+      right: 24px;
     }
 
-    /* Responsive */
-    @media (max-width: 768px) {
+    .lightbox .counter {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #d7d7d7;
+      font-size: 0.88rem;
+      letter-spacing: 0.06em;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @keyframes slide-in {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 900px) {
       header {
-        padding: 15px 6%;
+        padding: 16px 6%;
       }
 
-      nav a {
-        margin-left: 15px;
-        font-size: 0.85rem;
-      }
-
-      section {
-        padding: 80px 6%;
+      section,
+      footer {
+        padding-left: 6%;
+        padding-right: 6%;
       }
 
       .hero {
-        padding: 0 6%;
+        padding-left: 6%;
+        padding-right: 6%;
+      }
+    }
+
+    @media (max-width: 720px) {
+      :root {
+        --header-height: 108px;
       }
 
-      .lightbox button {
-        font-size: 2.5rem;
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.5rem, 11vw, 3.8rem);
+      }
+
+      .about-card,
+      .contact-card {
+        padding: 26px 20px;
+      }
+
+      .lightbox {
+        padding: 18px;
+      }
+
+      .lightbox .prev,
+      .lightbox .next {
+        bottom: 86px;
+        top: auto;
+      }
+
+      .lightbox .prev {
+        left: calc(50% - 66px);
+      }
+
+      .lightbox .next {
+        right: calc(50% - 66px);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
       }
     }
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Saltar al contenido</a>
 
-  <!-- Header -->
   <header>
-    <h1>
-      <img src="img/logotipo.png" alt="JH Studio Photography" class="logo" onerror="this.style.display='none'">
-      JH Studio
-    </h1>
-    <nav>
+    <a class="brand" href="#home" aria-label="Ir al inicio de JH Studio Photography">
+      <img src="img/logotipo.png" alt="Logotipo de JH Studio Photography" class="logo" width="83" height="42" fetchpriority="high" onerror="this.style.display='none'" />
+      <span class="brand-text">JH Studio</span>
+    </a>
+    <nav aria-label="Navegación principal">
       <a href="#home">Inicio</a>
       <a href="#about">Sobre mí</a>
       <a href="#portfolio">Portafolio</a>
@@ -327,176 +548,205 @@
     </nav>
   </header>
 
-  <!-- Hero -->
-  <section class="hero" id="home">
-    <div class="hero-content">
-      <h2>Capturar momentos<br>es aprender a mirar</h2>
-      <p>
-        JH Studio Photography es un espacio creativo donde la fotografía se convierte
-        en una forma de observar el mundo con más intención, calma y sensibilidad.
-      </p>
-      <a href="#portfolio" class="btn">Ver Portafolio</a>
-    </div>
-  </section>
-
-  <!-- About -->
-  <section id="about">
-    <h3 class="section-title">Sobre JH Studio</h3>
-    <div class="about">
-      <p>
-        JH Studio Photography nace como una marca creativa enfocada en inspirar a
-        personas entre 20 y 40 años a capturar momentos cotidianos y a desarrollar
-        una mirada más consciente del entorno. No se trata solo de tomar fotografías,
-        sino de contar historias visuales que conecten con emociones reales.
-      </p>
-    </div>
-  </section>
-
-  <!-- Portfolio -->
-  <section id="portfolio">
-    <h3 class="section-title">Portafolio</h3>
-    <div class="grid" id="gallery"></div>
-  </section>
-
-  <!-- Contact -->
-  <section id="contact">
-    <h3 class="section-title">Contacto</h3>
-    <div class="contact">
-      <p>
-        Para colaboraciones, inspiración o contacto directo, puedes escribirme a
-        través de mis canales principales.
-      </p>
-      <div class="contact-links">
-        <a href="https://www.instagram.com/jhstudiophotography/" target="_blank" rel="noopener">Instagram (DM)</a>
-        <a href="https://wa.me/8298695312" target="_blank" rel="noopener">WhatsApp</a>
+  <main id="main-content">
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <span class="eyebrow">Fotografía creativa</span>
+        <h1>Capturar momentos es aprender a mirar</h1>
+        <p>
+          JH Studio Photography es un espacio creativo donde la fotografía se convierte en una forma de observar
+          el mundo con más intención, calma y sensibilidad.
+        </p>
+        <div class="hero-actions">
+          <a href="#portfolio" class="btn">Ver portafolio</a>
+          <a href="#contact" class="btn btn-secondary">Hablemos</a>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Footer -->
+    <section id="about" aria-labelledby="about-title">
+      <h2 class="section-title" id="about-title">Sobre JH Studio</h2>
+      <p class="section-intro">Una propuesta visual enfocada en encontrar belleza, historia y emoción en los detalles cotidianos.</p>
+      <div class="about-card">
+        <p>
+          JH Studio Photography nace como una marca creativa enfocada en inspirar a personas entre 20 y 40 años a
+          capturar momentos cotidianos y desarrollar una mirada más consciente del entorno. No se trata solo de tomar
+          fotografías, sino de contar historias visuales que conecten con emociones reales.
+        </p>
+      </div>
+    </section>
+
+    <section id="portfolio" aria-labelledby="portfolio-title">
+      <h2 class="section-title" id="portfolio-title">Portafolio</h2>
+      <p class="section-intro">Explora una selección de imágenes con navegación fluida, carga diferida y vista ampliada.</p>
+      <div class="grid" id="gallery" aria-live="polite"></div>
+    </section>
+
+    <section id="contact" aria-labelledby="contact-title">
+      <h2 class="section-title" id="contact-title">Contacto</h2>
+      <div class="contact-card">
+        <p>
+          Para colaboraciones, inspiración o contacto directo, puedes escribirme a través de mis canales principales.
+        </p>
+        <div class="contact-links">
+          <a href="https://www.instagram.com/jhstudiophotography/" target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a href="https://wa.me/8298695312" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
   <footer>
-    © 2025 JH Studio Photography · Todos los derechos reservados @JhoysTV
+    © 2026 JH Studio Photography. Todos los derechos reservados.
   </footer>
 
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
-    <button class="close" id="close" aria-label="Cerrar">×</button>
-    <button class="prev" id="prev" aria-label="Anterior">‹</button>
-    <button class="next" id="next" aria-label="Siguiente">›</button>
-    <img id="lightbox-img" src="" alt="Imagen ampliada del portafolio">
-    <div class="counter" id="counter">1 / 60</div>
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="lightbox-title">
+    <h2 class="sr-only" id="lightbox-title">Vista ampliada del portafolio</h2>
+    <button class="close" id="close" aria-label="Cerrar vista ampliada">×</button>
+    <button class="prev" id="prev" aria-label="Imagen anterior">‹</button>
+    <button class="next" id="next" aria-label="Imagen siguiente">›</button>
+    <img id="lightbox-img" src="" alt="Imagen ampliada del portafolio" decoding="async" />
+    <div class="counter" id="counter">1 / 61</div>
   </div>
 
   <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const gallery = document.getElementById('gallery');
-    const totalImages = 61; // Cambia este número si tienes más o menos fotos
+    document.addEventListener('DOMContentLoaded', () => {
+      const galleryImages = [
+        'foto1.jpg', 'foto2.jpg', 'foto3.jpg', 'foto4.jpg', 'foto5.jpg', 'foto6.jpg', 'foto7.jpg', 'foto8.jpg', 'foto9.jpg',
+        'foto10.jpg', 'foto11.jpg', 'foto12.jpg', 'foto13.jpg', 'foto14.jpg', 'foto15.jpg', 'foto16.jpg', 'foto17.jpg',
+        'foto18.jpg', 'foto19.jpg', 'foto20.jpg', 'foto21.jpg', 'foto22.jpg', 'foto23.jpg', 'foto24.jpg', 'foto25.jpg',
+        'foto26.jpg', 'foto27.jpg', 'foto28.jpg', 'foto29.jpg', 'foto30.jpg', 'foto31.jpg', 'foto32.jpg', 'foto33.png',
+        'foto34.jpg', 'foto35.jpg', 'foto36.jpg', 'foto37.jpg', 'foto38.jpg', 'foto39.jpg', 'foto40.jpg', 'foto41.jpg',
+        'foto42.jpg', 'foto43.jpg', 'foto44.jpg', 'foto45.jpg', 'foto46.png', 'foto47.jpg', 'foto48.jpg', 'foto49.jpg',
+        'foto50.jpg', 'foto51.jpg', 'foto52.jpg', 'foto53.jpg', 'foto54.jpg', 'foto55.jpg', 'foto56.jpg', 'foto57.jpg',
+        'foto58.jpg', 'foto59.jpg', 'foto60.jpg', 'foto61.jpg'
+      ];
 
-    for (let i = 1; i <= totalImages; i++) {
-      const item = document.createElement('div');
-      item.className = 'grid-item';
+      const gallery = document.getElementById('gallery');
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const closeBtn = document.getElementById('close');
+      const prevBtn = document.getElementById('prev');
+      const nextBtn = document.getElementById('next');
+      const counter = document.getElementById('counter');
+      const body = document.body;
+      const totalImages = galleryImages.length;
+      let currentIndex = 0;
+      let lastTrigger = null;
+      let touchStartX = 0;
 
-      const img = document.createElement('img');
-      img.alt = `Fotografía ${i} - JH Studio Photography`;
-      img.loading = 'lazy';
-      img.style.cursor = 'pointer';
+      function createPlaceholder(label) {
+        const svg = `
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-label="${label}">
+            <rect width="800" height="1000" fill="#1d1d1d" />
+            <g fill="#6f6f6f">
+              <path d="M400 280a118 118 0 1 0 0 236 118 118 0 0 0 0-236Zm0 56a62 62 0 1 1 0 124 62 62 0 0 1 0-124Z" />
+              <path d="M250 228h90l34-48h52l34 48h90c37 0 68 31 68 68v356c0 37-31 68-68 68H250c-37 0-68-31-68-68V296c0-37 31-68 68-68Zm-12 68v356c0 7 5 12 12 12h300c7 0 12-5 12-12V296c0-7-5-12-12-12H250c-7 0-12 5-12 12Z" />
+            </g>
+            <text x="50%" y="82%" text-anchor="middle" fill="#9d9d9d" font-family="Poppins, Arial, sans-serif" font-size="36">Imagen no disponible</text>
+          </svg>`;
 
-      // Intentamos cargar .jpg primero
-      img.src = `img/foto${i}.jpg`;
-
-      // Si falla .jpg, intentamos .png
-      img.onerror = function() {
-        this.src = `img/foto${i}.png`;
-
-        // Si también falla .png, mostramos un placeholder visual SIN cargar otra imagen externa
-        this.onerror = function() {
-          // Quitamos el onerror para evitar bucles infinitos
-          this.onerror = null;
-          this.src = ''; // Limpiamos el src
-
-          // Estilo de fallback bonito: fondo gris oscuro con texto
-          this.style.backgroundColor = '#222';
-          this.style.display = 'flex';
-          this.style.alignItems = 'center';
-          this.style.justifyContent = 'center';
-          this.style.color = '#666';
-          this.style.fontSize = '1.2rem';
-          this.style.textAlign = 'center';
-          this.style.padding = '20px';
-          this.style.objectFit = 'contain';
-
-          // Creamos un data URL simple con un icono SVG de cámara rota
-          this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODBweCIgaGVpZ2h0PSI4MHB4IiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEyIDJDOC4xMyAyIDUgNS4xMyA1IDljMCAzLjg3IDMuMTMgNyA3IDdzNy0zLjEzIDctN0MxOSAxMy4xMyAxNS44NyAxNiAxMiAxNnoiIGZpbGw9IiM2NjYiLz48cGF0aCBkPSJNMTYgOGgtOHY4aDh6IiBmaWxsPSIjOTk5Ii8+PHBhdGggZD0iTTE4IDE2SDZ2MmgxMnYtMnoiIGZpbGw9IiM2NjYiLz48L3N2Zz4=';
-          this.alt = 'Imagen no disponible';
-        };
-      };
-
-      item.appendChild(img);
-      gallery.appendChild(item);
-    }
-
-    // === Lightbox (sin cambios importantes) ===
-    const images = document.querySelectorAll('.grid-item img');
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const closeBtn = document.getElementById('close');
-    const prevBtn = document.getElementById('prev');
-    const nextBtn = document.getElementById('next');
-    const counter = document.getElementById('counter');
-
-    let currentIndex = 0;
-
-    function showImage() {
-      // Usamos la imagen actual del grid (ya tiene el src correcto con fallback)
-      lightboxImg.src = images[currentIndex].src || '';
-      lightboxImg.alt = images[currentIndex].alt;
-      counter.textContent = `${currentIndex + 1} / ${totalImages}`;
-      lightbox.setAttribute('aria-hidden', 'false');
-    }
-
-    images.forEach((img, index) => {
-      img.addEventListener('click', () => {
-        currentIndex = index;
-        showImage();
-        lightbox.classList.add('active');
-      });
-    });
-
-    function closeLightbox() {
-      lightbox.classList.remove('active');
-      lightbox.setAttribute('aria-hidden', 'true');
-    }
-
-    closeBtn.addEventListener('click', closeLightbox);
-    prevBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex - 1 + totalImages) % totalImages;
-      showImage();
-    });
-    nextBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex + 1) % totalImages;
-      showImage();
-    });
-
-    // Teclado y swipe (igual que antes)
-    document.addEventListener('keydown', (e) => {
-      if (!lightbox.classList.contains('active')) return;
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowLeft') prevBtn.click();
-      if (e.key === 'ArrowRight') nextBtn.click();
-    });
-
-    let startX = 0;
-    lightbox.addEventListener('touchstart', e => startX = e.touches[0].clientX);
-    lightbox.addEventListener('touchend', e => {
-      const endX = e.changedTouches[0].clientX;
-      const diff = startX - endX;
-      if (Math.abs(diff) > 50) {
-        diff > 0 ? nextBtn.click() : prevBtn.click();
+        return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
       }
+
+      function updateCounter() {
+        counter.textContent = `${currentIndex + 1} / ${totalImages}`;
+      }
+
+      function showImage(index) {
+        currentIndex = index;
+        lightboxImg.src = `img/${galleryImages[currentIndex]}`;
+        lightboxImg.alt = `Fotografía ${currentIndex + 1} de JH Studio Photography`;
+        updateCounter();
+      }
+
+      function openLightbox(index, trigger) {
+        lastTrigger = trigger;
+        showImage(index);
+        lightbox.classList.add('active');
+        lightbox.setAttribute('aria-hidden', 'false');
+        body.classList.add('lightbox-open');
+        closeBtn.focus();
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove('active');
+        lightbox.setAttribute('aria-hidden', 'true');
+        body.classList.remove('lightbox-open');
+        lightboxImg.src = '';
+        if (lastTrigger) {
+          lastTrigger.focus();
+        }
+      }
+
+      galleryImages.forEach((fileName, index) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'grid-item';
+        button.setAttribute('aria-label', `Abrir fotografía ${index + 1}`);
+
+        const img = document.createElement('img');
+        img.src = `img/${fileName}`;
+        img.alt = `Fotografía ${index + 1} - JH Studio Photography`;
+        img.loading = index < 6 ? 'eager' : 'lazy';
+        img.decoding = 'async';
+        if (index < 2) {
+          img.fetchPriority = 'high';
+        }
+        img.onerror = function () {
+          this.onerror = null;
+          this.src = createPlaceholder(`Fotografía ${index + 1} no disponible`);
+          this.alt = `Fotografía ${index + 1} no disponible`;
+        };
+
+        button.appendChild(img);
+        button.addEventListener('click', () => openLightbox(index, button));
+        gallery.appendChild(button);
+      });
+
+      closeBtn.addEventListener('click', closeLightbox);
+      prevBtn.addEventListener('click', () => showImage((currentIndex - 1 + totalImages) % totalImages));
+      nextBtn.addEventListener('click', () => showImage((currentIndex + 1) % totalImages));
+
+      lightbox.addEventListener('click', (event) => {
+        if (event.target === lightbox) {
+          closeLightbox();
+        }
+      });
+
+      lightboxImg.addEventListener('error', function () {
+        this.src = createPlaceholder('Imagen ampliada no disponible');
+        this.alt = 'Imagen ampliada no disponible';
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (!lightbox.classList.contains('active')) {
+          return;
+        }
+
+        if (event.key === 'Escape') {
+          closeLightbox();
+        } else if (event.key === 'ArrowLeft') {
+          showImage((currentIndex - 1 + totalImages) % totalImages);
+        } else if (event.key === 'ArrowRight') {
+          showImage((currentIndex + 1) % totalImages);
+        }
+      });
+
+      lightbox.addEventListener('touchstart', (event) => {
+        touchStartX = event.touches[0].clientX;
+      }, { passive: true });
+
+      lightbox.addEventListener('touchend', (event) => {
+        const touchEndX = event.changedTouches[0].clientX;
+        const deltaX = touchStartX - touchEndX;
+        if (Math.abs(deltaX) > 50) {
+          showImage(deltaX > 0 ? (currentIndex + 1) % totalImages : (currentIndex - 1 + totalImages) % totalImages);
+        }
+      }, { passive: true });
+
+      updateCounter();
     });
-  });
-</script>
+  </script>
 </body>
 </html>
-
-
