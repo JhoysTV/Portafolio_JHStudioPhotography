@@ -1,0 +1,25 @@
+{
+  "name": "JH Studio Photography",
+  "short_name": "JH Studio",
+  "description": "Historias visuales con una mirada consciente, sensible y creativa.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0a0a08",
+  "theme_color": "#0a0a08",
+  "orientation": "portrait-primary",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "img/logotipo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "img/logotipo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

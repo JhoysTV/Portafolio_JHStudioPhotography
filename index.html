@@ -4,789 +4,100 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>JH Studio Photography — Portafolio</title>
-  <meta name="description" content="JH Studio Photography. Historias visuales con una mirada consciente, sensible y creativa. Fotografía editorial y artística." />
-  <meta name="theme-color" content="#0a0a08" />
-  <meta property="og:title" content="JH Studio Photography" />
+
+  <!-- SEO -->
+  <meta name="description" content="JH Studio Photography. Historias visuales con una mirada consciente, sensible y creativa. Fotografía editorial y artística en Santo Domingo." />
+  <meta name="robots"      content="index, follow" />
+  <meta name="author"      content="JH Studio Photography" />
+
+  <!-- Open Graph -->
+  <meta property="og:title"       content="JH Studio Photography" />
   <meta property="og:description" content="Fotografía con intención. Una mirada que captura lo que otros pasan por alto." />
-  <meta property="og:type" content="website" />
-  <meta property="og:locale" content="es_ES" />
+  <meta property="og:type"        content="website" />
+  <meta property="og:image"       content="img/foto1.jpg" />
+  <meta property="og:locale"      content="es_DO" />
+  <meta property="og:site_name"   content="JH Studio Photography" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="JH Studio Photography" />
+  <meta name="twitter:description" content="Fotografía con intención. Una mirada que captura lo que otros pasan por alto." />
+  <meta name="twitter:image"       content="img/foto1.jpg" />
+
+  <!-- PWA + Theme -->
+  <meta name="theme-color"                  content="#0a0a08" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <link rel="manifest"        href="manifest.json" />
+  <link rel="icon"            type="image/png" href="img/logotipo.png" />
+  <link rel="apple-touch-icon" href="img/logotipo.png" />
+
+  <!-- Fonts — non-blocking -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap"
+        onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  </noscript>
 
-  <style>
-    /* ─── Design Tokens ───────────────────────────────────────── */
-    :root {
-      --ink:        #0a0a08;
-      --ink-soft:   #141410;
-      --paper:      #f5f0e8;
-      --paper-warm: #ede8dc;
-      --gold:       #b8965a;
-      --gold-pale:  #d4b07a;
-      --gold-dim:   rgba(184,150,90,0.14);
-      --cream:      #e8e0cc;
-      --muted:      #7a7568;
-      --border:     rgba(184,150,90,0.18);
-      --border-ink: rgba(10,10,8,0.12);
-      --shadow-deep: 0 32px 72px rgba(0,0,0,0.42);
-      --shadow-card: 0 8px 32px rgba(0,0,0,0.22);
-      --r: 4px;
-      --hh: 80px;
-      --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css" />
 
-    /* ─── Reset & Base ────────────────────────────────────────── */
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; font-size: 16px; }
-    body {
-      font-family: 'DM Mono', monospace;
-      background: var(--ink);
-      color: var(--paper);
-      line-height: 1.6;
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
-    body.no-scroll { overflow: hidden; }
-    a { color: inherit; text-decoration: none; }
-    img { max-width: 100%; display: block; }
-    button, input, textarea { font: inherit; }
-
-    /* ─── Cursor personalizado ────────────────────────────────── */
-    .cursor {
-      position: fixed;
-      width: 10px; height: 10px;
-      background: var(--gold);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%,-50%);
-      transition: transform 0.1s, width 0.3s var(--ease), height 0.3s var(--ease), background 0.3s;
-      mix-blend-mode: difference;
-    }
-    .cursor-ring {
-      position: fixed;
-      width: 36px; height: 36px;
-      border: 1px solid var(--gold);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9998;
-      transform: translate(-50%,-50%);
-      transition: transform 0.18s var(--ease), width 0.35s var(--ease), height 0.35s var(--ease), opacity 0.3s;
-      opacity: 0.6;
-    }
-    .cursor.hover { width: 20px; height: 20px; }
-    .cursor-ring.hover { width: 60px; height: 60px; opacity: 0.3; }
-
-    /* ─── Noise overlay ───────────────────────────────────────── */
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-      opacity: 0.028;
-      pointer-events: none;
-      z-index: 9000;
-    }
-
-    /* ─── Skip link ───────────────────────────────────────────── */
-    .skip-link {
-      position: absolute; left: 16px; top: -60px;
-      background: var(--gold); color: var(--ink);
-      padding: 10px 18px; border-radius: 2px;
-      z-index: 9001; transition: top 0.2s;
-      font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
-    }
-    .skip-link:focus { top: 16px; }
-    a:focus-visible, button:focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }
-
-    /* ─── Header ──────────────────────────────────────────────── */
-    header {
-      position: fixed; top: 0; left: 0; width: 100%;
-      height: var(--hh);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 5%;
-      z-index: 1000;
-      transition: background 0.45s var(--ease), border-color 0.45s;
-      border-bottom: 1px solid transparent;
-    }
-    header.scrolled {
-      background: rgba(10,10,8,0.92);
-      backdrop-filter: blur(18px) saturate(1.4);
-      border-color: var(--border);
-    }
-    .brand {
-      display: flex; align-items: center; gap: 14px;
-      font-family: 'Cormorant Garamond', serif;
-    }
-    .brand-logo-wrap {
-      width: 38px; height: 38px;
-      border: 1px solid var(--border);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
-      transition: border-color 0.3s;
-    }
-    .brand-logo-wrap:hover { border-color: var(--gold); }
-    .brand-logo-wrap img {
-      width: 100%; height: 100%; object-fit: contain;
-    }
-    .brand-initials {
-      font-size: 0.9rem; font-weight: 600; letter-spacing: 0.18em;
-      color: var(--gold); text-transform: uppercase;
-    }
-    .brand-sep {
-      width: 1px; height: 18px; background: var(--border);
-    }
-    .brand-name {
-      font-size: 1.02rem; font-weight: 300; letter-spacing: 0.22em;
-      color: var(--cream); text-transform: uppercase;
-    }
-
-    /* ─── Nav ─────────────────────────────────────────────────── */
-    nav { display: flex; align-items: center; gap: 36px; }
-    nav a {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem; letter-spacing: 0.22em;
-      text-transform: uppercase; color: var(--muted);
-      position: relative; transition: color 0.3s;
-    }
-    nav a::after {
-      content: ''; position: absolute; bottom: -3px; left: 0;
-      width: 0; height: 1px; background: var(--gold);
-      transition: width 0.35s var(--ease);
-    }
-    nav a:hover, nav a.active { color: var(--gold-pale); }
-    nav a:hover::after, nav a.active::after { width: 100%; }
-
-    .nav-cta {
-      padding: 9px 22px;
-      border: 1px solid var(--gold);
-      border-radius: 1px;
-      color: var(--gold) !important;
-      letter-spacing: 0.18em;
-      transition: background 0.3s, color 0.3s !important;
-    }
-    .nav-cta::after { display: none !important; }
-    .nav-cta:hover { background: var(--gold) !important; color: var(--ink) !important; }
-
-    /* Mobile menu */
-    .menu-toggle {
-      display: none;
-      flex-direction: column; gap: 5px;
-      background: none; border: none; cursor: pointer;
-      padding: 6px;
-    }
-    .menu-toggle span {
-      display: block; width: 24px; height: 1px;
-      background: var(--cream);
-      transition: transform 0.35s var(--ease), opacity 0.35s;
-    }
-    .menu-toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-    .menu-toggle.open span:nth-child(2) { opacity: 0; }
-    .menu-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-
-    .mobile-nav {
-      position: fixed; inset: 0; top: var(--hh);
-      background: var(--ink);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 40px;
-      z-index: 999;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.35s var(--ease);
-    }
-    .mobile-nav.open { opacity: 1; pointer-events: all; }
-    .mobile-nav a {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.4rem; letter-spacing: 0.08em;
-      color: var(--cream); text-transform: uppercase;
-      transition: color 0.3s;
-    }
-    .mobile-nav a:hover { color: var(--gold); }
-
-    /* ─── Hero ────────────────────────────────────────────────── */
-    .hero {
-      position: relative;
-      min-height: 100svh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      overflow: hidden;
-    }
-
-    .hero-visual {
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-visual img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      filter: brightness(0.72) saturate(0.85);
-      transition: transform 12s ease;
-      transform: scale(1.06);
-    }
-    .hero:hover .hero-visual img { transform: scale(1.0); }
-    .hero-visual::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(90deg, rgba(10,10,8,0.72) 0%, rgba(10,10,8,0.1) 100%);
-    }
-
-    .hero-content {
-      display: flex; flex-direction: column; justify-content: center;
-      padding: calc(var(--hh) + 60px) 7% 80px;
-      position: relative; z-index: 1;
-    }
-
-    .hero-tag {
-      display: inline-flex; align-items: center; gap: 10px;
-      margin-bottom: 48px;
-      font-size: 0.68rem; letter-spacing: 0.32em; text-transform: uppercase;
-      color: var(--gold);
-    }
-    .hero-tag::before {
-      content: ''; width: 32px; height: 1px; background: var(--gold);
-    }
-
-    .hero h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3.2rem, 5vw, 5.4rem);
-      font-weight: 300;
-      line-height: 1.04;
-      letter-spacing: -0.01em;
-      color: var(--paper);
-      margin-bottom: 28px;
-    }
-    .hero h1 em {
-      font-style: italic;
-      color: var(--gold-pale);
-    }
-
-    .hero-desc {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.82rem;
-      line-height: 1.8;
-      color: var(--muted);
-      max-width: 420px;
-      margin-bottom: 52px;
-    }
-
-    .hero-actions {
-      display: flex; flex-wrap: wrap; gap: 16px; align-items: center;
-    }
-
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 14px 32px;
-      background: var(--gold);
-      color: var(--ink);
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
-      border: none; cursor: pointer;
-      transition: background 0.3s, transform 0.3s var(--ease);
-    }
-    .btn-primary:hover { background: var(--gold-pale); transform: translateY(-2px); }
-    .btn-primary svg { transition: transform 0.3s var(--ease); }
-    .btn-primary:hover svg { transform: translateX(4px); }
-
-    .btn-outline {
-      display: inline-flex; align-items: center;
-      padding: 13px 30px;
-      border: 1px solid var(--border);
-      color: var(--cream);
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
-      cursor: pointer; background: none;
-      transition: border-color 0.3s, color 0.3s, transform 0.3s var(--ease);
-    }
-    .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
-
-    .hero-scroll {
-      position: absolute;
-      bottom: 40px; left: 50%;
-      transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 8px;
-      font-size: 0.62rem; letter-spacing: 0.28em; text-transform: uppercase;
-      color: var(--muted); z-index: 2;
-    }
-    .hero-scroll-line {
-      width: 1px; height: 48px;
-      background: linear-gradient(to bottom, var(--gold), transparent);
-      animation: scroll-pulse 2s ease-in-out infinite;
-    }
-    @keyframes scroll-pulse {
-      0%, 100% { opacity: 0.4; transform: scaleY(1); }
-      50% { opacity: 1; transform: scaleY(1.2); }
-    }
-
-    .hero-stats {
-      position: absolute;
-      bottom: 40px; right: 5%;
-      display: flex; flex-direction: column; gap: 20px;
-      z-index: 2;
-    }
-    .stat-item {
-      text-align: right;
-    }
-    .stat-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem; font-weight: 300;
-      color: var(--gold-pale); line-height: 1;
-    }
-    .stat-label {
-      font-size: 0.6rem; letter-spacing: 0.22em;
-      text-transform: uppercase; color: var(--muted);
-      margin-top: 2px;
-    }
-
-    /* ─── Section base ────────────────────────────────────────── */
-    section {
-      padding: 100px 5%;
-      scroll-margin-top: calc(var(--hh) + 20px);
-    }
-
-    .section-eyebrow {
-      display: flex; align-items: center; gap: 12px;
-      font-size: 0.66rem; letter-spacing: 0.34em;
-      text-transform: uppercase; color: var(--gold);
-      margin-bottom: 20px;
-    }
-    .section-eyebrow::before {
-      content: ''; width: 28px; height: 1px; background: var(--gold);
-    }
-
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.2rem, 4.5vw, 3.4rem);
-      font-weight: 300; line-height: 1.1;
-      color: var(--paper);
-    }
-    .section-title em { font-style: italic; color: var(--gold-pale); }
-
-    /* ─── About Section ───────────────────────────────────────── */
-    #about {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-      background: var(--ink-soft);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .about-image-wrap {
-      position: relative;
-    }
-    .about-image-outer {
-      position: relative;
-      overflow: hidden;
-      aspect-ratio: 3/4;
-    }
-    .about-image-outer img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      filter: grayscale(20%) brightness(0.9);
-      transition: transform 0.8s var(--ease), filter 0.6s;
-    }
-    .about-image-outer:hover img {
-      transform: scale(1.04);
-      filter: grayscale(0%) brightness(1);
-    }
-    .about-image-frame {
-      position: absolute;
-      top: 18px; right: -18px;
-      width: calc(100% - 24px);
-      height: calc(100% - 24px);
-      border: 1px solid var(--gold);
-      pointer-events: none; z-index: -1;
-    }
-    .about-badge {
-      position: absolute;
-      bottom: -20px; left: -20px;
-      background: var(--gold);
-      color: var(--ink);
-      padding: 18px 22px;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.88rem; font-weight: 600;
-      letter-spacing: 0.06em;
-      line-height: 1.3;
-    }
-    .about-badge strong { display: block; font-size: 1.6rem; font-weight: 600; line-height: 1; }
-
-    .about-content { padding: 20px 0; }
-    .about-content .section-title { margin-bottom: 28px; }
-    .about-text {
-      font-size: 0.9rem; line-height: 1.9;
-      color: var(--muted); margin-bottom: 20px;
-    }
-    .about-text strong { color: var(--cream); font-weight: 400; }
-
-    .about-divider {
-      width: 40px; height: 1px; background: var(--gold);
-      margin: 32px 0;
-    }
-
-    .about-qualities {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 16px; margin-top: 36px;
-    }
-    .quality-item {
-      padding: 16px 18px;
-      border: 1px solid var(--border);
-      transition: border-color 0.3s, background 0.3s;
-    }
-    .quality-item:hover { border-color: var(--gold); background: var(--gold-dim); }
-    .quality-label {
-      font-size: 0.64rem; letter-spacing: 0.24em;
-      text-transform: uppercase; color: var(--gold);
-      margin-bottom: 6px;
-    }
-    .quality-value {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.02rem; color: var(--cream);
-    }
-
-    /* ─── Portfolio Section ───────────────────────────────────── */
-    #portfolio {
-      background: var(--ink);
-    }
-    .portfolio-header {
-      display: flex; justify-content: space-between; align-items: flex-end;
-      margin-bottom: 56px;
-      flex-wrap: wrap; gap: 24px;
-    }
-    .portfolio-count {
-      font-size: 0.68rem; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--muted);
-    }
-    .portfolio-count span { color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; }
-
-    /* Masonry-style grid */
-    .gallery-grid {
-      columns: 3;
-      column-gap: 16px;
-    }
-    .gallery-item {
-      break-inside: avoid;
-      margin-bottom: 16px;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      background: var(--ink-soft);
-      display: block; border: none; padding: 0; width: 100%;
-      transition: box-shadow 0.4s var(--ease);
-    }
-    .gallery-item:hover { box-shadow: 0 20px 56px rgba(0,0,0,0.6); }
-
-    .gallery-item img {
-      width: 100%; display: block;
-      transition: transform 0.7s var(--ease), filter 0.5s;
-      filter: brightness(0.88) saturate(0.9);
-    }
-    .gallery-item:hover img {
-      transform: scale(1.05);
-      filter: brightness(1) saturate(1.05);
-    }
-
-    .gallery-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(10,10,8,0.85) 0%, transparent 55%);
-      opacity: 0;
-      transition: opacity 0.4s var(--ease);
-      display: flex; align-items: flex-end; padding: 20px;
-    }
-    .gallery-item:hover .gallery-overlay { opacity: 1; }
-    .gallery-overlay-content {
-      transform: translateY(8px);
-      transition: transform 0.4s var(--ease);
-    }
-    .gallery-item:hover .gallery-overlay-content { transform: translateY(0); }
-    .gallery-num {
-      font-size: 0.62rem; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--gold);
-    }
-    .gallery-expand {
-      color: var(--cream); font-size: 0.76rem;
-      letter-spacing: 0.06em;
-    }
-
-    /* ─── Services / Approach ─────────────────────────────────── */
-    #services {
-      background: var(--ink-soft);
-      border-top: 1px solid var(--border);
-    }
-    .services-header {
-      max-width: 680px; margin-bottom: 64px;
-    }
-    .services-header .section-title { margin-bottom: 16px; }
-    .services-header p {
-      font-size: 0.84rem; line-height: 1.8; color: var(--muted);
-    }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-    }
-    .service-card {
-      padding: 44px 36px;
-      background: rgba(255,255,255,0.02);
-      border: 1px solid var(--border);
-      transition: background 0.4s, border-color 0.4s, transform 0.4s var(--ease);
-      position: relative; overflow: hidden;
-    }
-    .service-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0;
-      width: 100%; height: 2px;
-      background: var(--gold);
-      transform: scaleX(0); transform-origin: left;
-      transition: transform 0.4s var(--ease);
-    }
-    .service-card:hover { background: rgba(184,150,90,0.06); border-color: var(--gold); transform: translateY(-4px); }
-    .service-card:hover::before { transform: scaleX(1); }
-
-    .service-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 3rem; font-weight: 300;
-      color: rgba(184,150,90,0.2);
-      line-height: 1; margin-bottom: 20px;
-      transition: color 0.4s;
-    }
-    .service-card:hover .service-num { color: rgba(184,150,90,0.5); }
-
-    .service-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem; font-weight: 400;
-      color: var(--paper); margin-bottom: 12px;
-    }
-    .service-desc {
-      font-size: 0.8rem; line-height: 1.8; color: var(--muted);
-    }
-
-    /* ─── Contact Section ─────────────────────────────────────── */
-    #contact {
-      background: var(--ink);
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 80px; align-items: center;
-    }
-
-    .contact-content .section-title { margin-bottom: 16px; }
-    .contact-intro {
-      font-size: 0.84rem; line-height: 1.9; color: var(--muted);
-      margin-bottom: 40px; max-width: 440px;
-    }
-
-    .contact-channels {
-      display: flex; flex-direction: column; gap: 16px;
-    }
-    .contact-channel {
-      display: flex; align-items: center; gap: 18px;
-      padding: 20px 24px;
-      border: 1px solid var(--border);
-      transition: border-color 0.3s, background 0.3s, transform 0.3s var(--ease);
-      cursor: pointer;
-    }
-    .contact-channel:hover { border-color: var(--gold); background: var(--gold-dim); transform: translateX(6px); }
-    .channel-icon {
-      width: 42px; height: 42px;
-      border: 1px solid var(--border);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      transition: border-color 0.3s, background 0.3s;
-    }
-    .contact-channel:hover .channel-icon { border-color: var(--gold); background: var(--gold); }
-    .contact-channel:hover .channel-icon svg { color: var(--ink); }
-    .channel-icon svg { width: 18px; height: 18px; color: var(--gold); transition: color 0.3s; }
-    .channel-info { flex: 1; }
-    .channel-label {
-      font-size: 0.62rem; letter-spacing: 0.22em;
-      text-transform: uppercase; color: var(--gold); margin-bottom: 3px;
-    }
-    .channel-value { font-size: 0.86rem; color: var(--cream); }
-    .channel-arrow {
-      font-size: 1.1rem; color: var(--muted);
-      transition: color 0.3s, transform 0.3s var(--ease);
-    }
-    .contact-channel:hover .channel-arrow { color: var(--gold); transform: translateX(4px); }
-
-    .contact-visual {
-      position: relative; overflow: hidden;
-      aspect-ratio: 4/5;
-    }
-    .contact-visual img {
-      width: 100%; height: 100%; object-fit: cover;
-      filter: brightness(0.7) grayscale(15%);
-      transition: transform 0.8s var(--ease);
-    }
-    .contact-visual:hover img { transform: scale(1.04); }
-    .contact-visual-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(135deg, rgba(184,150,90,0.15), transparent);
-    }
-    .contact-quote {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      padding: 32px;
-      background: linear-gradient(to top, rgba(10,10,8,0.95), transparent);
-    }
-    .contact-quote p {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.18rem; font-style: italic;
-      line-height: 1.5; color: var(--cream);
-    }
-    .contact-quote cite {
-      display: block; margin-top: 10px;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.64rem; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--gold);
-      font-style: normal;
-    }
-
-    /* ─── Footer ──────────────────────────────────────────────── */
-    footer {
-      padding: 36px 5%;
-      border-top: 1px solid var(--border);
-      display: flex; align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap; gap: 16px;
-    }
-    .footer-brand {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.96rem; font-weight: 300;
-      letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--cream);
-    }
-    .footer-copy {
-      font-size: 0.66rem; letter-spacing: 0.16em;
-      text-transform: uppercase; color: var(--muted);
-    }
-    .footer-social { display: flex; gap: 20px; }
-    .footer-social a {
-      font-size: 0.66rem; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--muted);
-      transition: color 0.3s;
-    }
-    .footer-social a:hover { color: var(--gold); }
-
-    /* ─── Lightbox ────────────────────────────────────────────── */
-    .lightbox {
-      position: fixed; inset: 0;
-      background: rgba(4,4,3,0.97);
-      z-index: 2000;
-      display: none; align-items: center; justify-content: center;
-      padding: 24px;
-    }
-    .lightbox.active { display: flex; }
-
-    .lightbox-inner {
-      position: relative;
-      max-width: min(88vw, 1200px);
-      max-height: 86vh;
-    }
-    .lightbox-inner img {
-      max-width: 100%; max-height: 86vh;
-      object-fit: contain;
-      animation: lb-in 0.35s var(--ease);
-    }
-    @keyframes lb-in {
-      from { opacity: 0; transform: scale(0.96) translateY(16px); }
-      to   { opacity: 1; transform: scale(1)    translateY(0); }
-    }
-
-    .lb-close {
-      position: absolute; top: -48px; right: 0;
-      background: none; border: 1px solid var(--border);
-      color: var(--cream); width: 36px; height: 36px;
-      border-radius: 50%; cursor: pointer; font-size: 1.1rem;
-      display: flex; align-items: center; justify-content: center;
-      transition: border-color 0.3s, background 0.3s;
-    }
-    .lb-close:hover { border-color: var(--gold); background: var(--gold); color: var(--ink); }
-
-    .lb-prev, .lb-next {
-      position: fixed; top: 50%; transform: translateY(-50%);
-      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
-      color: var(--cream); width: 48px; height: 48px;
-      border-radius: 50%; cursor: pointer; font-size: 1.3rem;
-      display: flex; align-items: center; justify-content: center;
-      transition: border-color 0.3s, background 0.3s, transform 0.3s;
-    }
-    .lb-prev { left: 24px; }
-    .lb-next { right: 24px; }
-    .lb-prev:hover { border-color: var(--gold); background: var(--gold-dim); transform: translateY(-50%) translateX(-2px); }
-    .lb-next:hover { border-color: var(--gold); background: var(--gold-dim); transform: translateY(-50%) translateX(2px); }
-
-    .lb-counter {
-      position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%);
-      font-size: 0.68rem; letter-spacing: 0.2em; color: var(--muted);
-      white-space: nowrap;
-    }
-    .lb-counter span { color: var(--gold); }
-
-    /* ─── Scroll reveal ───────────────────────────────────────── */
-    .reveal {
-      opacity: 0; transform: translateY(28px);
-      transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-    .reveal-delay-4 { transition-delay: 0.45s; }
-
-    /* ─── Utilities ───────────────────────────────────────────── */
-    .sr-only {
-      position: absolute; width: 1px; height: 1px;
-      padding: 0; margin: -1px; overflow: hidden;
-      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
-    }
-
-    /* ─── Responsive ──────────────────────────────────────────── */
-    @media (max-width: 1100px) {
-      .gallery-grid { columns: 2; }
-      .services-grid { grid-template-columns: 1fr 1fr; }
-    }
-
-    @media (max-width: 860px) {
-      .hero { grid-template-columns: 1fr; min-height: 100svh; }
-      .hero-visual { position: absolute; inset: 0; z-index: 0; }
-      .hero-visual::after { background: rgba(10,10,8,0.62); }
-      .hero-content {
-        position: relative; z-index: 1;
-        padding: calc(var(--hh) + 60px) 6% 120px;
-      }
-      .hero-stats { bottom: 80px; }
-      #about { grid-template-columns: 1fr; gap: 48px; }
-      .about-image-wrap { max-width: 380px; margin: 0 auto; }
-      #contact { grid-template-columns: 1fr; gap: 48px; }
-      .contact-visual { display: none; }
-      nav { display: none; }
-      .menu-toggle { display: flex; }
-      .services-grid { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 520px) {
-      .gallery-grid { columns: 1; }
-      .hero-stats { display: none; }
-      footer { flex-direction: column; align-items: flex-start; gap: 12px; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-      }
-    }
-  </style>
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "JH Studio Photography",
+    "description": "Historias visuales con una mirada consciente, sensible y creativa. Fotografía editorial y artística.",
+    "image": "img/foto1.jpg",
+    "logo":  "img/logotipo.png",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Santo Domingo",
+      "addressCountry": "DO"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+18298695312",
+      "contactType": "customer service",
+      "availableLanguage": "Spanish"
+    },
+    "sameAs": [
+      "https://www.instagram.com/jhstudiophotography/"
+    ]
+  }
+  </script>
 </head>
 <body>
-  <!-- Cursor personalizado -->
-  <div class="cursor" id="cursor" aria-hidden="true"></div>
+
+  <!-- Loader -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <div class="loader-logo">
+        <img src="img/logotipo.png" alt="" width="48" height="48" />
+      </div>
+      <div class="loader-brand">JH Studio Photography</div>
+      <div class="loader-bar">
+        <div class="loader-bar-fill" id="loader-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll Progress -->
+  <div class="scroll-progress" aria-hidden="true">
+    <div class="scroll-progress-fill" id="scroll-progress-fill"></div>
+  </div>
+
+  <!-- Custom Cursor -->
+  <div class="cursor"      id="cursor"      aria-hidden="true"></div>
   <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
 
   <a class="skip-link" href="#main-content">Saltar al contenido</a>
 
-  <!-- ── HEADER ─────────────────────────────────────────────── -->
+  <!-- ── HEADER ───────────────────────────────────────────────── -->
   <header id="site-header">
     <a class="brand" href="#home" aria-label="JH Studio Photography — Inicio">
       <div class="brand-logo-wrap">
@@ -806,12 +117,13 @@
       <a href="#contact" class="nav-cta">Contacto</a>
     </nav>
 
-    <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
+    <button class="menu-toggle" id="menu-toggle"
+            aria-label="Abrir menú" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </header>
 
-  <!-- Mobile nav -->
+  <!-- Mobile Nav -->
   <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
     <a href="#home"      data-mobile-link>Inicio</a>
     <a href="#about"     data-mobile-link>Historia</a>
@@ -822,7 +134,7 @@
 
   <main id="main-content">
 
-    <!-- ── HERO ───────────────────────────────────────────────── -->
+    <!-- ── HERO ─────────────────────────────────────────────────── -->
     <section class="hero" id="home" aria-label="Portada">
       <div class="hero-content">
         <p class="hero-tag">Fotografía consciente · Santo Domingo</p>
@@ -845,9 +157,10 @@
 
       <div class="hero-visual" aria-hidden="true">
         <img
-          src="https://images.unsplash.com/photo-1554048612-b6a482bc67e5?auto=format&fit=crop&w=1400&q=85"
+          src="img/foto1.jpg"
           alt="Fotografía artística de JH Studio"
           fetchpriority="high"
+          decoding="async"
         />
       </div>
 
@@ -868,14 +181,15 @@
       </div>
     </section>
 
-    <!-- ── ABOUT ──────────────────────────────────────────────── -->
+    <!-- ── ABOUT ─────────────────────────────────────────────────── -->
     <section id="about" aria-labelledby="about-title">
       <div class="about-image-wrap reveal">
         <div class="about-image-outer">
           <img
-            src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=800&q=80"
-            alt="El fotógrafo de JH Studio Photography"
+            src="img/foto5.jpg"
+            alt="Fotografía de JH Studio Photography"
             loading="lazy"
+            decoding="async"
           />
         </div>
         <div class="about-image-frame" aria-hidden="true"></div>
@@ -922,7 +236,7 @@
       </div>
     </section>
 
-    <!-- ── PORTFOLIO ──────────────────────────────────────────── -->
+    <!-- ── PORTFOLIO ─────────────────────────────────────────────── -->
     <section id="portfolio" aria-labelledby="portfolio-title">
       <div class="portfolio-header reveal">
         <div>
@@ -931,15 +245,40 @@
             <em>Portafolio</em> visual
           </h2>
         </div>
-        <div class="portfolio-count" aria-live="polite">
-          <span id="photo-count">61</span> fotografías
+        <div class="portfolio-controls">
+          <div class="portfolio-count" aria-live="polite">
+            <span id="photo-count">61</span> fotografías
+          </div>
+          <div class="gallery-view-toggle" role="group" aria-label="Tipo de vista de galería">
+            <button class="view-btn active" id="view-masonry"
+                    aria-pressed="true" title="Vista masonry">
+              <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+                <rect x="1" y="1"  width="7" height="10" rx="1"/>
+                <rect x="10" y="1" width="7" height="6"  rx="1"/>
+                <rect x="1" y="13" width="7" height="4"  rx="1"/>
+                <rect x="10" y="9" width="7" height="8"  rx="1"/>
+              </svg>
+              <span class="sr-only">Masonry</span>
+            </button>
+            <button class="view-btn" id="view-grid"
+                    aria-pressed="false" title="Vista cuadrícula">
+              <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+                <rect x="1"  y="1"  width="7" height="7" rx="1"/>
+                <rect x="10" y="1"  width="7" height="7" rx="1"/>
+                <rect x="1"  y="10" width="7" height="7" rx="1"/>
+                <rect x="10" y="10" width="7" height="7" rx="1"/>
+              </svg>
+              <span class="sr-only">Cuadrícula</span>
+            </button>
+          </div>
         </div>
       </div>
 
-      <div class="gallery-grid reveal reveal-delay-1" id="gallery" aria-label="Galería de fotografías"></div>
+      <div class="gallery-grid reveal reveal-delay-1"
+           id="gallery" aria-label="Galería de fotografías"></div>
     </section>
 
-    <!-- ── SERVICES / APPROACH ────────────────────────────────── -->
+    <!-- ── SERVICES / APPROACH ───────────────────────────────────── -->
     <section id="services" aria-labelledby="services-title">
       <div class="services-header reveal">
         <p class="section-eyebrow">Mi enfoque</p>
@@ -968,7 +307,7 @@
       </div>
     </section>
 
-    <!-- ── CONTACT ────────────────────────────────────────────── -->
+    <!-- ── CONTACT ────────────────────────────────────────────────── -->
     <section id="contact" aria-labelledby="contact-title">
       <div class="contact-content reveal">
         <p class="section-eyebrow">Contacto</p>
@@ -1022,9 +361,10 @@
 
       <div class="contact-visual reveal reveal-delay-2" aria-hidden="true">
         <img
-          src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80"
-          alt="Cámara fotográfica"
+          src="img/foto20.jpg"
+          alt="Fotografía de JH Studio"
           loading="lazy"
+          decoding="async"
         />
         <div class="contact-visual-overlay"></div>
         <div class="contact-quote">
@@ -1036,198 +376,59 @@
 
   </main>
 
-  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <!-- ── FOOTER ────────────────────────────────────────────────── -->
   <footer>
-    <span class="footer-brand">JH Studio Photography</span>
+    <div class="footer-left">
+      <span class="footer-brand">JH Studio Photography</span>
+      <span class="footer-location">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
+          <path d="M6 1a3.5 3.5 0 00-3.5 3.5C2.5 7.5 6 11 6 11s3.5-3.5 3.5-6.5A3.5 3.5 0 006 1zm0 4.75a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/>
+        </svg>
+        Santo Domingo, RD
+      </span>
+    </div>
     <span class="footer-copy">© 2026 — Todos los derechos reservados</span>
     <div class="footer-social">
-      <a href="https://www.instagram.com/jhstudiophotography/" target="_blank" rel="noopener noreferrer">Instagram</a>
-      <a href="https://wa.me/8298695312" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+      <a href="https://www.instagram.com/jhstudiophotography/"
+         target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://wa.me/8298695312"
+         target="_blank" rel="noopener noreferrer">WhatsApp</a>
     </div>
   </footer>
 
-  <!-- ── LIGHTBOX ───────────────────────────────────────────── -->
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="lb-title">
+  <!-- ── LIGHTBOX ──────────────────────────────────────────────── -->
+  <div class="lightbox" id="lightbox"
+       role="dialog" aria-modal="true"
+       aria-hidden="true" aria-labelledby="lb-title">
     <h2 class="sr-only" id="lb-title">Vista ampliada del portafolio</h2>
     <div class="lightbox-inner">
       <button class="lb-close" id="lb-close" aria-label="Cerrar">×</button>
-      <img id="lb-img" src="" alt="" decoding="async" />
-      <div class="lb-counter" id="lb-counter">
-        <span id="lb-current">1</span> / <span id="lb-total">61</span>
+      <div class="lb-img-wrap">
+        <div class="lb-loading" id="lb-loading" aria-hidden="true">
+          <div class="lb-spinner"></div>
+        </div>
+        <img id="lb-img" src="" alt="" decoding="async" />
+      </div>
+      <div class="lb-footer">
+        <div class="lb-counter" id="lb-counter">
+          <span id="lb-current">1</span> / <span id="lb-total">61</span>
+        </div>
+        <div class="lb-hint">← → navegar · Esc cerrar</div>
       </div>
     </div>
     <button class="lb-prev" id="lb-prev" aria-label="Imagen anterior">‹</button>
     <button class="lb-next" id="lb-next" aria-label="Imagen siguiente">›</button>
   </div>
 
-  <script>
-  (() => {
-    /* ── Custom cursor ─────────────────────────────────────── */
-    const cursor = document.getElementById('cursor');
-    const ring   = document.getElementById('cursor-ring');
-    let mx = 0, my = 0, rx = 0, ry = 0;
-    document.addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
-    });
-    function animRing() {
-      rx += (mx - rx) * 0.14; ry += (my - ry) * 0.14;
-      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-      requestAnimationFrame(animRing);
-    }
-    animRing();
-    document.querySelectorAll('a, button, .gallery-item, .quality-item, .service-card, .contact-channel').forEach(el => {
-      el.addEventListener('mouseenter', () => { cursor.classList.add('hover'); ring.classList.add('hover'); });
-      el.addEventListener('mouseleave', () => { cursor.classList.remove('hover'); ring.classList.remove('hover'); });
-    });
+  <!-- Back to Top -->
+  <button class="back-to-top" id="back-to-top" aria-label="Volver al inicio">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d="M10 15V5M5 10l5-5 5 5"
+            stroke="currentColor" stroke-width="1.5"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
 
-    /* ── Header scroll ─────────────────────────────────────── */
-    const header = document.getElementById('site-header');
-    const navLinks = document.querySelectorAll('nav a');
-    const sections = document.querySelectorAll('section[id]');
-    window.addEventListener('scroll', () => {
-      header.classList.toggle('scrolled', window.scrollY > 40);
-      let current = '';
-      sections.forEach(sec => {
-        if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
-      });
-      navLinks.forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-      });
-    }, { passive: true });
-
-    /* ── Mobile menu ───────────────────────────────────────── */
-    const toggle   = document.getElementById('menu-toggle');
-    const mobileNav = document.getElementById('mobile-nav');
-    toggle.addEventListener('click', () => {
-      const open = toggle.classList.toggle('open');
-      mobileNav.classList.toggle('open', open);
-      mobileNav.setAttribute('aria-hidden', String(!open));
-      toggle.setAttribute('aria-expanded', String(open));
-      document.body.classList.toggle('no-scroll', open);
-    });
-    document.querySelectorAll('[data-mobile-link]').forEach(a => {
-      a.addEventListener('click', () => {
-        toggle.classList.remove('open');
-        mobileNav.classList.remove('open');
-        mobileNav.setAttribute('aria-hidden', 'true');
-        toggle.setAttribute('aria-expanded', 'false');
-        document.body.classList.remove('no-scroll');
-      });
-    });
-
-    /* ── Scroll reveal ─────────────────────────────────────── */
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    /* ── Gallery + Lightbox ────────────────────────────────── */
-    const galleryImages = [
-      'foto1.jpg','foto2.jpg','foto3.jpg','foto4.jpg','foto5.jpg','foto6.jpg','foto7.jpg','foto8.jpg','foto9.jpg',
-      'foto10.jpg','foto11.jpg','foto12.jpg','foto13.jpg','foto14.jpg','foto15.jpg','foto16.jpg','foto17.jpg',
-      'foto18.jpg','foto19.jpg','foto20.jpg','foto21.jpg','foto22.jpg','foto23.jpg','foto24.jpg','foto25.jpg',
-      'foto26.jpg','foto27.jpg','foto28.jpg','foto29.jpg','foto30.jpg','foto31.jpg','foto32.jpg','foto33.png',
-      'foto34.jpg','foto35.jpg','foto36.jpg','foto37.jpg','foto38.jpg','foto39.jpg','foto40.jpg','foto41.jpg',
-      'foto42.jpg','foto43.jpg','foto44.jpg','foto45.jpg','foto46.png','foto47.jpg','foto48.jpg','foto49.jpg',
-      'foto50.jpg','foto51.jpg','foto52.jpg','foto53.jpg','foto54.jpg','foto55.jpg','foto56.jpg','foto57.jpg',
-      'foto58.jpg','foto59.jpg','foto60.jpg','foto61.jpg'
-    ];
-
-    const grid       = document.getElementById('gallery');
-    const lightbox   = document.getElementById('lightbox');
-    const lbImg      = document.getElementById('lb-img');
-    const lbClose    = document.getElementById('lb-close');
-    const lbPrev     = document.getElementById('lb-prev');
-    const lbNext     = document.getElementById('lb-next');
-    const lbCurrent  = document.getElementById('lb-current');
-    const lbTotal    = document.getElementById('lb-total');
-    const photoCount = document.getElementById('photo-count');
-
-    let idx = 0, trigger = null, touchX = 0;
-    const total = galleryImages.length;
-    lbTotal.textContent = total;
-    photoCount.textContent = total;
-
-    function placeholder(label) {
-      const s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 700"><rect width="600" height="700" fill="#1a1a18"/><text x="50%" y="55%" text-anchor="middle" fill="#4a4a48" font-family="DM Mono,monospace" font-size="22">${label}</text></svg>`;
-      return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(s);
-    }
-
-    function openLb(i, el) {
-      idx = i; trigger = el;
-      lbImg.src = 'img/' + galleryImages[i];
-      lbImg.alt = 'Fotografía ' + (i + 1) + ' — JH Studio Photography';
-      lbCurrent.textContent = i + 1;
-      lightbox.classList.add('active');
-      lightbox.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('no-scroll');
-      lbClose.focus();
-    }
-    function closeLb() {
-      lightbox.classList.remove('active');
-      lightbox.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('no-scroll');
-      lbImg.src = '';
-      if (trigger) trigger.focus();
-    }
-    function nav(dir) {
-      idx = (idx + dir + total) % total;
-      lbImg.style.opacity = '0';
-      setTimeout(() => {
-        lbImg.src = 'img/' + galleryImages[idx];
-        lbImg.alt = 'Fotografía ' + (idx + 1) + ' — JH Studio Photography';
-        lbCurrent.textContent = idx + 1;
-        lbImg.style.opacity = '1';
-      }, 120);
-    }
-    lbImg.style.transition = 'opacity 0.15s';
-
-    galleryImages.forEach((name, i) => {
-      const btn = document.createElement('button');
-      btn.type = 'button'; btn.className = 'gallery-item';
-      btn.setAttribute('aria-label', 'Ver fotografía ' + (i + 1));
-
-      const img = document.createElement('img');
-      img.src = 'img/' + name;
-      img.alt = 'Fotografía ' + (i + 1) + ' — JH Studio Photography';
-      img.loading = i < 6 ? 'eager' : 'lazy';
-      img.decoding = 'async';
-      if (i < 2) img.fetchPriority = 'high';
-      img.onerror = function() { this.onerror=null; this.src=placeholder('Imagen ' + (i+1)); };
-
-      const ov = document.createElement('div'); ov.className = 'gallery-overlay';
-      const oc = document.createElement('div'); oc.className = 'gallery-overlay-content';
-      const num = document.createElement('div'); num.className = 'gallery-num';
-      num.textContent = String(i + 1).padStart(2, '0');
-      const exp = document.createElement('div'); exp.className = 'gallery-expand';
-      exp.textContent = 'Ampliar';
-      oc.appendChild(num); oc.appendChild(exp); ov.appendChild(oc);
-
-      btn.appendChild(img); btn.appendChild(ov);
-      btn.addEventListener('click', () => openLb(i, btn));
-      grid.appendChild(btn);
-    });
-
-    lbClose.addEventListener('click', closeLb);
-    lbPrev.addEventListener('click', () => nav(-1));
-    lbNext.addEventListener('click', () => nav(1));
-    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLb(); });
-    lbImg.addEventListener('error', function() { this.src = placeholder('No disponible'); });
-
-    document.addEventListener('keydown', e => {
-      if (!lightbox.classList.contains('active')) return;
-      if (e.key === 'Escape') closeLb();
-      if (e.key === 'ArrowLeft')  nav(-1);
-      if (e.key === 'ArrowRight') nav(1);
-    });
-
-    lightbox.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
-    lightbox.addEventListener('touchend',   e => {
-      const dx = touchX - e.changedTouches[0].clientX;
-      if (Math.abs(dx) > 48) nav(dx > 0 ? 1 : -1);
-    }, { passive: true });
-  })();
-  </script>
+  <script src="js/main.js" defer></script>
 </body>
 </html>
